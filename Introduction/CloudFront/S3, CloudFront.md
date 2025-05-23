@@ -23,9 +23,16 @@
      + 그래서 CloudFront를 CDN 서비스라고도 표현
 
 4. 사용 이유
-   - S3만 사용해도 웹 서비스를 배포할 수 있다.
+   - S3만 사용해도 웹 서비스를 배포할 수 있음
    - CloudFront는 컨텐츠를 전송 받는 성능을 향상시키기 위해 사용
    - HTTPS를 적용하려면 CloudFront를 사용해야만 함
    - S3에는 HTTPS를 적용시키는 기능을 제공하고 있지 않음
-   - 이 외에도 **보안을 한층 강화**할 수 있다는 장점 존재
+   - 이 외에도 보안을 한층 강화할 수 있다는 장점 존재
    - 이러한 장점들 덕분에 S3와 CloudFront를 같이 써서 웹 서비스를 배포
+
+-----
+### S3, CloudFront를 활용한 아키텍처 구성
+-----
+<div align="center">
+<img src="https://github.com/user-attachments/assets/6ca7fb73-37ee-4950-aa16-9f4a7999ede3">
+</div>
