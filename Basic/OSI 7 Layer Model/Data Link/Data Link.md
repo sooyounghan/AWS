@@ -5,7 +5,7 @@
 2. 주요 단위 : Frame
 3. 주요 구성 요소 : Mac Address, Switch
 4. 주요 특징
-   - CSMA / CD(Carrier-Sense Multiple Access with Collsion Detection) 방식을 활용해서 각 디바이스 간 통신을 원할하게 연
+   - CSMA / CD(Carrier-Sense Multiple Access with Collsion Detection) 방식을 활용해서 각 디바이스 간 통신을 원할하게 연결
    - 대상을 구별하여 디바이스 간 통신을 지원 (Unicast) / Broadcast도 지원
 
 5. MAC(Media Access Control) Address
