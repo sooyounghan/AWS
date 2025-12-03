@@ -19,7 +19,7 @@
 
 6. Switch (L2)
 <div align="center">
-<img src="https://github.com/user-attachments/assets/28440727-134e-480b-903a-ea7f35506a3a">
+<img src="https://github.com/user-attachments/assets/6d56dcc6-08c7-47fe-82ba-88d89110a18b" />
 </div>
 
    - L2 디바이스이며, 각 네트워크 인터페이스에 MAC 주소가 부여되어 있는 상태
@@ -27,7 +27,7 @@
 
 7. Frame
 <div align="center">
-<img src="https://github.com/user-attachments/assets/0ae9d58b-2bc9-4846-a823-6bbc933d1a1f">
+<img src="https://github.com/user-attachments/assets/cbcdeffa-0c76-4be2-9046-6a3b0e5880d2" />
 </div>
 
    - Layer2에서 사용되는 일종의 통신 단위
@@ -38,21 +38,27 @@
    - Frame Check Sequence : 오류 검증
 
 <div align="center">
-<img src="https://github.com/user-attachments/assets/18d1fc60-0f67-4500-80cd-442a12ab382a">
+<img src="https://github.com/user-attachments/assets/0a72de7f-f7f8-4aab-9341-88e0fcd4911f" />
 </div>
 
 8. 연결 흐름도 : 데이터 링크 레이어 하단에 물리 레이어가 존재
    - 물리 레이어에서 물리적 통신을 실시하는데, Frame을 비트 스트림으로 생성해 전달
 <div align="center">
-<img src="https://github.com/user-attachments/assets/513d5004-0c4d-409a-bbed-81d64bca7968">
+<img src="https://github.com/user-attachments/assets/41c3efab-13c1-4f4b-98ac-31919247813d" />
 </div>
 
 9. CSMA / CD(Carrier-Sense Multiple Access with Collsion Detection)
     - Carrier-Sense : 물리 레이어에 신호가 전송되는데 이를 확인하는데, 아무것도 없다면 Frame을 전송
 <div align="center">
-<img src="https://github.com/user-attachments/assets/1c1d4056-b1ac-4779-93f9-eab06a2b584a">
+<img src="https://github.com/user-attachments/assets/1e602b05-50d3-47db-8f5e-cacd4a0877b3" />
+<img src="https://github.com/user-attachments/assets/06002989-c0a7-412e-8248-0e6ed2c92fcc" />
+<img src="https://github.com/user-attachments/assets/db559cd6-f382-44d8-ab9e-2407159150d7" />
+<img src="https://github.com/user-attachments/assets/1b2510b8-da58-4938-b7c5-4b725da12d6a" />
+<img src="https://github.com/user-attachments/assets/e4c08f9f-4f73-4da7-aa52-8f45a1433f2f" />
+<img src="https://github.com/user-attachments/assets/8b89faa8-24bb-4cd8-84f1-2bab10d1158c" />
+<img src="https://github.com/user-attachments/assets/fdd86a52-4c08-4f24-9652-b84a5a40d09e" />
+<img src="https://github.com/user-attachments/assets/9d1f82fe-c377-4524-840e-ff50eede0927" />
 </div>
-
    - Multiple Access : 여러 개를 한 번에 사용한다는 의미
    - 만약, 이 두 전송이 서로 없다고 판단하여 메세지가 충돌하게 되면, 확인하는 것이 Collsion Detection
       + 두 디바이스 모두 멈추고, 시그널을 보내 충돌 발생을 서로가 인지를 할 수 있도록 함
@@ -62,8 +68,12 @@
 10. Data Link Layer 계층에도 충돌 방지 기능이 있다고 할지라도, 주체들이 많으면 비효율적
     - 따라서, 이를 스위치 개념으로 묶어서 관리하면, 충돌을 굉장히 줄일 수 있음
 <div align="center">
-<img src="https://github.com/user-attachments/assets/6430bdc0-2d0a-4bbe-9de6-71757bd3e8c2">
+<img src="https://github.com/user-attachments/assets/b588db7b-1eae-4cb3-982e-b981ce24e649" />
+<img src="https://github.com/user-attachments/assets/343bdda4-985d-4263-87c1-85da338da250" />
+<img src="https://github.com/user-attachments/assets/43603f3e-218f-427a-88d3-2b5450dd6616" />
+<img src="https://github.com/user-attachments/assets/809e5355-7cbc-491d-b748-006520e8c1f7" />
 </div>
+
 
    - 스위치 안에 테이블이 존재하며, 스위치 포트 별로 어떤 디바이스가 있는지 기록하고 있음
    - 프레임을 저장하는 공간이 존재 (Frame Storage)
@@ -72,7 +82,7 @@
 
 11. Broadcast
 <div align="center">
-<img src="https://github.com/user-attachments/assets/7704fd78-1375-44e2-bdd6-c0c8f02e29e6">
+<img src="https://github.com/user-attachments/assets/2e24e558-8f39-4f3c-bcc8-f53029d5af80" /
 </div>
 
    - 대상 MAC Address를 ```FF:FF:FF:FF:FF:FF```로 지정하여 Frame 생성
