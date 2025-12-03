@@ -7,7 +7,7 @@
 4. 대표 구성 요소 : 케이블 / 안테나 / RF 등 전송 매체, 허브, 리피터
 5. 두 주체 간에 데이터를 교환하는 방식
 <div align="center">
-<img src="https://github.com/user-attachments/assets/20c04dd1-6202-4662-9380-25697e1f60bf">
+<img src="https://github.com/user-attachments/assets/95efc7b9-a15c-4178-b0ba-48c5bf9ec4c6">
 </div>
 
    - 전달 방식
@@ -15,12 +15,12 @@
      + 예를 들어, 구리선이라고 한다면, Voltage가 +면 1, -이면 0으로 정의
      + 예를 들어, 전파라고 한다면 1이면 전송, 0이면 없음의 형식으로 정의
 <div align="center">
-<img src="https://github.com/user-attachments/assets/3e91f635-166c-4d6c-a6ff-68fc3a334c4e">
+<img src="https://github.com/user-attachments/assets/c4052656-e572-4316-a6fd-666ff0838843">
 </div>
 
 6. 물리적 연결 수립의 예
 <div align="center">
-<img src="https://github.com/user-attachments/assets/33391838-c8f8-4d13-a816-4e59cf9260bd">
+<img src="https://github.com/user-attachments/assets/f449ff7e-fc55-4831-9e99-62ec10c29e9b">
 </div>
 
    - Hub : Physical Layer 단위에서 다수의 기기들을 연결해주는 장치
@@ -29,11 +29,14 @@
      + 받은 내용을 그대로 전달 (Broadcast) : 즉, 대상을 지정해서 전달 불가능
      + 물리적 Layer에 허브(L1)를 연결한 그림 : 허브가 하는 역할은 받은 신호를 그대로 다른 클라이언트에게 전달
 <div align="center">
-<img src="https://github.com/user-attachments/assets/8c95197e-3e85-4ce1-9ed7-3677d63123e5">
+<img src="https://github.com/user-attachments/assets/31f11355-1ed9-42ce-a33d-c2f594260250">
 </div>
 
    - 문제점 : 물리적으로 선으로 연결되어있는데, 만약 클라이언트 A, B, C, D가 동시에 전송하면 누구도 받지 못하는 충돌(Collision) 문제가 발생 : 하지만, 허브(Hub)에는 충돌을 막거나 조절할 수 있는 기능이 아예 없음
       + 또한, Client A가 Client B로 직접 전송하고, D라든지 C는 듣지 못하게 대상을 지정해서 할 수 없음 : 허브는 데이터를 받으면 전송하는 역할만 수행
+<div align="center">
+<img src="https://github.com/user-attachments/assets/0e8eb315-c92a-48f4-8151-097c0e5bbc7c">
+</div>
 
    - 이러한 기능을 해결하기 위해서는 Data Link에서 해결해야 함
    
