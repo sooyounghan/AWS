@@ -5,6 +5,5 @@
 2. 각 계층은 하위 계층의 기능을 활용해 역할을 수행하고 상위 계층으로 처리 결과를 전달 (낮은 계층에서 높은 계층 순서로 올라가게 됨)
 3. 구성도
 <div align="center">
-<img src="https://github.com/user-attachments/assets/74361f73-0e4a-4a1b-80d7-1e87982e9f19">
+<img src="https://github.com/user-attachments/assets/93fa19bc-f5d7-4fc8-858d-f7bd104a4d4d">
 </div>
-
