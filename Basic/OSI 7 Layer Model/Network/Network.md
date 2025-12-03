@@ -54,6 +54,8 @@
 <img src="https://github.com/user-attachments/assets/a9de1fed-f62a-4be3-abe5-591567346c8d" />
 </div>
 
+   - ```192.168.2.0```에서 ```192.168.2```가 네트워크 주소
+
 6. Router
    - 네트워크 간 패킷을 주고 받는 Layer 3 장치
    - IP 대역별 최적 경로를 수집 및 관리
