@@ -25,7 +25,7 @@
      + TTL (Time To Live) : 캐시가 얼마만큼 살아있는지를 나타내는 시간 단위
 
 5. 캐시 방식 : 캐시에 원본 데이터를 채우는 다양한 정책
-   - Lazy Loading : 요청이 있을 때만 캐시에 원본 데이터르 채우는 정채 (불필요 요청이 없으나 최초 데이터 로딩 필요)
+   - Lazy Loading : 요청이 있을 때만 캐시에 원본 데이터르 채우는 정책 (불필요 요청이 없으나 최초 데이터 로딩 필요)
 <div align="center">
 <img src="https://github.com/user-attachments/assets/fb58e63b-1c21-49ad-89be-349cf55e6535" />
 </div>
