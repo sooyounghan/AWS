@@ -1,15 +1,18 @@
 -----
 ### Session 
 -----
-1. OSI 7 Model과 TCP / IP Model
+1. OSI 7 Model(과거)과 TCP / IP Model(현대) 구조와 과거 Mainframe 시절 통신
 <div align="center">
 <img src="https://github.com/user-attachments/assets/bb0ca5ef-f09a-4b12-b4c4-e047d584ec53" />
 <img src="https://github.com/user-attachments/assets/d7fa4637-ef3d-497e-8b5e-02d6bed7341f" />
 </div>
 
+   - 과거 : Terminal 1에서 Terminal B의 통신 구분 불가 (Mainframe 상 통신이므로, IP와 Port 주소가 전부 동일)
+   - 즉, Layer 1, 2, 3, 4 상에는 통신 자체를 구분할 수 없음
+
 2. Session Layer
    - 통신 주체끼리 연결을 유지할 수 있는 방법 정의
-   - 예전 컴퓨팅 환경에서 Layer 1, 2, 3, 4 이외의 차원에서 지속적 연결(세션)이 수립될 수 있는 방법 제공 (예) MAC Address(2)와 IP(3) 주소와 포트(4)가 동일한 상황에서 유저를 구분하는 방법은 무엇인가?
+   - 예전 컴퓨팅 환경에서 Layer 1, 2, 3, 4 이외의 차원에서 지속적 연결(세션)이 수립될 수 있는 방법 제공 (예) MAC Address(2)와 IP(3) 주소와 포트(4)가 동일한 상황에서 유저를 구분하는 방법은 무엇인가?)
    - 현재도 마찬가지로 Layer 4 이상의 추가적 차원에서 지속적 연결(세션)을 수립할 수 있는 방법을 포함 (예) HTTP Cookie)
 <div align="center">
 <img src="https://github.com/user-attachments/assets/48d78ad0-fdaf-4610-8ca2-261360e219a8" />
@@ -53,6 +56,8 @@
        * Content-Type
 
 6. Application Load Balancer
+   - L7 Load Balancer
+   - 호스트 기반 라우팅 (즉, 도메인을 확인하여 이를 기반으로 의사 결정)
 <div align="center">
 <img src="https://github.com/user-attachments/assets/3cffcf7a-23f7-4467-9d1d-f0f8a4714057" />
 <img src="https://github.com/user-attachments/assets/6a3e141f-3f8e-43d7-a0e2-eb5ee7439f36" />
