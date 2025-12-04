@@ -58,7 +58,7 @@
 
 5. Top Level Domain (TLDs)
    - DNS 계층 구조의 두 번째 레벨
-   - 실질적으로 정보를 가지고 있는 최상위 레벨 (예) ```.com / .org / .net / .info 등)
+   - 실질적으로 정보를 가지고 있는 최상위 레벨 (예) .com / .org / .net / .info 등)
    - 종류
      + Country Code TLDs : 각 나라에 할당된 두 자리 코드 (예) .kr / .jp / .uk / .ai 등)
      + Sponsered TLDs : 사설 조직이나 기관에 할당된 TLDs (예) .edu / .gov / .mil 등)
