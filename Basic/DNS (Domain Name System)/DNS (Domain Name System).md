@@ -49,7 +49,7 @@
      + 다음 단계인 TLDs(Top Level Domain)의 Zone File을 가진 NS 서버의 주소 정보 보유
    - IANA (Internet Assgined Numbers Authroity)에서 조율하는 13개의 주체에서 관리 : A ~ M까지 각 관리 주체별 다른 서버 주소
    - Root Hints File
-     + DNS Root의 주소를 당믄 파일
+     + DNS Root의 주소를 담은 파일
      + 각 DNS Resolver에 하드 코딩
 <div align="center">
 <img src="https://github.com/user-attachments/assets/a563018a-e4ea-4694-b08a-570117cccf57" />
