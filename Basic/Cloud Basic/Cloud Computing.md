@@ -34,7 +34,7 @@
    + 유저의 수요에 빠르게 대처하기 힘듬
    + 장애 기기를 교체하는 시간도 느림
 <div align="center">
-<img src="https://github.com/user-attachments/assets/ac70929c-5982-4c6e-90dc-849e52207df9" />
+<img src="https://github.com/user-attachments/assets/c60b1628-d9c0-48bf-b06d-16d594d5ee45" />
 </div>
 
 4. 클라우드 컴퓨팅은 컴퓨팅 빌려 쓰기를 의미
