@@ -23,4 +23,14 @@
    + BAsicly Available : 가용성을 중심으로 처리 (예) 가용성을 유지하기 위해 데이터는 다수 스토리지에 저장하며 접근 가능하게 유지)
    + Soft-State : 데이터베이스의 상태는 느슨하고 유연함. 즉, 확정된 상태로 계속 유지하지 않고 자연스럽게 원하는 상태로 수렴
    + Eventual Consistency : 일관성이 바로 확보되지 않고, 시간이 지나서 언젠가 일관적 상태로 수렴
-  
+
+5. 가벼운 구조
+   - 대부분 SQL 사용이 불가능하고 쿼리가 복잡하지 않고 간단한 처리만 가능
+   - 확장성이 뛰어남
+
+6. 주요 AWS 서비스 : Amazon DynamoDB, Amazon MemoryDB (Redis, memCached, ValKey) 등
+7. 주요 사용 사례 : 캐시, 간단한 데이터 저장, 추천 로직 등 각 DB 구조에 맞는 사용
+8. 정리
+<div align="center">
+<img src="https://github.com/user-attachments/assets/ae423918-7ae2-46ec-8df5-b2aac5c9b8bd" />
+</div>
