@@ -6,6 +6,8 @@
      + AWS 계정에 AWS 리소스를 생성
      + 이후 다양한 사용 주체(IAM 사용자, 역할 등)이 생성된 리소스를 사용
      + 💡 계정과 사용자는 다름
+       * 계정 : AWS의 사용자와 리소스를 관리하는 단위
+       * 사용자 : 리소스를 실제로 액세스하고 사용하는 주체
 
    - 계정 생성 방법
      + 이메일, 신용카드, 계정 이름을 제공해서 신규 계정 생성
@@ -92,7 +94,7 @@
        * 거의 왠만한 유명한 서비스들은 모두 사용 가능(EC2, Lambda, SQS, S3, Route53, CloudFront 등)
        * 사용 불가능한 서비스 에시 : Organizations(초대받기는 가능), MarketPlace, Neptune
      + 기타 제한
-       * Reserved Instance 등 구매 불가능
+       * Reserved Instance (AWS 약정 형식으로 미리 구매해 사용) 등 구매 불가능
        * 제한된 기간 무료 서비스(예) QuickSight) 사용 불가능
        * 프로모션 Credit 사용 불가능
        * Organization에 가입하거나 스킬빌더 Subscription 등의 경우 자동 Paid Plan 승격
