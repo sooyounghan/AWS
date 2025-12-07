@@ -13,7 +13,7 @@
      + 보안 그룹도 그대로 설정
      + 인스턴스 시작
 
-   - EC2 실행이 완료되면 연결 - 사용자 이름 ec2-user - 연결
+   - EC2 실행이 완료되면 연결 - 사용자 이름 : ec2-user - 연결
    - 관리자 권한 획득 : sudo -s
      + 현재 AWS CLI, 즉 AWS와 통신할 수 있는 Commad Line이 존재하므로 활용
      + 사용자 목록 출력 : aws iam list-users
