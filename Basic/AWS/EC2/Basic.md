@@ -26,6 +26,6 @@
    - 기타 서버가 필요한 모든 작업
 
 4. 주요 내용
-  - EC2와 EC2를 활용하기 위한 다양한 주변 서비스들
-  - EC2 활용 방식은 고급 AWS 서비스와 연동 필요
-    + 예) 인증서 구매 없이 무료로 HTTPS를 구현할 수 있는 ALB의 SSL Termination 기능 : Route 53(AWS의 DNS 서비스) 및 ACM(AWS 인증서 관리 서비스) 이해 필요
+   - EC2와 EC2를 활용하기 위한 다양한 주변 서비스들
+   - EC2 활용 방식은 고급 AWS 서비스와 연동 필요
+     + 예) 인증서 구매 없이 무료로 HTTPS를 구현할 수 있는 ALB의 SSL Termination 기능 : Route 53(AWS의 DNS 서비스) 및 ACM(AWS 인증서 관리 서비스) 이해 필요
