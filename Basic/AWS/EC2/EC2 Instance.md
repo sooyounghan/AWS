@@ -12,10 +12,10 @@
      + 저장을 담당하는 EBS와 네트워크로 연결
 
    - 저장 방법에 따라 두 가지로 분류
-     + EBS 연동
-     + 인스턴스 스토어
+     + EBS 연동 : 하드디스크에 해당하는 EBS와 네트워크 연결
+     + 인스턴스 스토어 : EC2 안에 스토리지 존재
 
-   - 하나의 가용영역(AZ)에 존재
+   - 💡 하나의 가용영역(AZ)에 존재 (즉, 여러 가용 영역에서 걸쳐서 존재 불가)
 <div align="center">
 <img src="https://github.com/user-attachments/assets/ae5a3b3e-7f8c-47a5-9fde-2baf054e3a29" />
 <img src="https://github.com/user-attachments/assets/0d84f282-6087-4173-a268-321df1da16fe" />
@@ -27,7 +27,7 @@
      + 각 인스턴스 유형 별 사용 목적에 따라 최적화 (예) 메모리 위주, CPU 위주, 그래픽 카드 위주 등)
      + 유형 별로 이름 존재 : 같은 유형의 인스턴스들을 인스턴스 패밀리라고 부름 (예) t유형, m유형, inf유형 등)
      + 타입 별 세대별로 숫자 부여 (예) m5 = m인스턴스의 5번째 세대)
-     + 아키텍쳐 및 프로세서 / 추가기술에 따라 접미사 (c7gn = c 인스턴스 중 AWS Graviton 프로세서를 사용(g) + Network Optimized(n) = c7gn)
+     + 아키텍쳐 및 프로세서 / 추가기술에 따라 접미사 (2개 이상 가능) (c7gn = c 인스턴스 중 AWS Graviton 프로세서를 사용(g) + Network Optimized(n) = c7gn)
 <div align="center">
 <img src="https://github.com/user-attachments/assets/04a4009b-5cd5-494b-a835-98429d041c71" />
 </div>
