@@ -2,7 +2,7 @@
 ### EC2의 생명 주기
 -----
 <div align="center">
-<img src="https://github.com/user-attachments/assets/b128323f-4947-418f-8989-c07e3e55a17d" />
+<img src="https://github.com/user-attachments/assets/d7bd6371-c655-4155-a680-67a856dce650" />
 </div>
 
 1. 중지
