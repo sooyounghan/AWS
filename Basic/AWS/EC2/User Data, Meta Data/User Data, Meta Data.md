@@ -55,12 +55,35 @@
 6. IMDS(Instance Metadata Service) V2
    - 보안 토큰을 발급받아 요청할 때 마다 토큰을 사용해 인증하는 세션 방식 : 토큰의 유효기간은 1초에서 최대 6시간
    - IMDSv1보다 더 높은 보안 수준 제공 : IAM 정책 등 활용해 EC2 인스턴스가 IMDS V2를 사용하도록 강제 가능
-<img width="745" height="544" alt="image" src="https://github.com/user-attachments/assets/73a3f92b-5777-4e56-ac87-7f0b5d050d03" />
+<div align="center">
+<img src="https://github.com/user-attachments/assets/73a3f92b-5777-4e56-ac87-7f0b5d050d03" />
+</div>
 
    - 예시
      + ```TOKEN=`url-X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` ```
      + ```curl -H "X-aws-ec2-metada-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/tags/instance/Name```
 
 7. Demo - User Data / Metadata 활용
-   - EC2가 올라갈 때 웹 서버(Apache) 설치 및 기동
+   - EC2가 올라갈 때 웹 서버(Apache) 설치 및 기동 (인스턴스 이름 : demo-ec2-metadata / 고급 세부 정보 - 메타데이터 액세스 기능(활성) 및 메타데이터 버전, 메타데이터에서 태그 허용(활성화))
+     + sudo -s
+     + ```TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")``` : TOKEN 발급
+     + ```curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id``` : 인스턴스 ID 가져오기 (Tag 취급) 
+     + ```curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/tags/instance/Name```
+
+   - 인스턴스 추가 생성(인스턴스 이름 : demo-my-webserver / 네트워크 설정 - 인터넷에서 HTTP 트래픽 허용 / 고급 세부 정보 - 사용자 데이터 (선택사항)에 다음 입력
+```bash
+#!/bin/bash
+sudo -s
+dnf install httpd -y
+service httpd start
+chkconfig httpd on
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+echo "$INSTANCE_ID" >> /var/www/html/index.html
+```
+
    - 이 과정에서 index.html에 자신의 인스턴스 아이디 업데이트 : Meta Data를 활용해 자신의 인스턴스 아이디 조회해 index.html에 업데이트
+     + sudo -s
+     + nano /var/www/html/index.html
+     + cd /var/log
+     + nano cloud-init.log : EC2 인스턴스가 처음 초기화되면서 수행한 로그 출력
