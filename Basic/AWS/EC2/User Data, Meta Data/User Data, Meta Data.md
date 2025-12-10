@@ -40,7 +40,7 @@
      + 두 가지 모드
        * IMDS v1 : Request / Response 기반
        * IMDS v2 : Session 기반 (Default)
-   - 주요 사용 사례 : 인스턴스 별 설정, IAM 임시 자격증명 조회 등 (AWS CLI, SDK 등 내부적 활용(
+   - 주요 사용 사례 : 인스턴스 별 설정, IAM 임시 자격증명 조회 등 (AWS CLI, SDK 등 내부적 활용)
    - EC2 실행 시 메타데이터 액세스 가능 여부 설정 가능
      + 기본 활성화
      + 버전 선택 가능
