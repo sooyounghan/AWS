@@ -2,11 +2,13 @@
 ### Elastic Load Balancer (ELB)
 -----
 1. 둘 이상 가용 영역에서 EC2 인스턴스, 컨테이너, IP 주소 등 여러 대상에 걸쳐 수신되는 트래픽을 자동으로 분산하며, 등록된 대상의 상태를 모니터링하면서 상태가 양호한 대상으로만 트래픽을 라우팅
-<img width="1356" height="618" alt="image" src="https://github.com/user-attachments/assets/5db0e0ac-1b85-48a1-ab15-a2b5088a33ff" />
-<img width="1366" height="653" alt="image" src="https://github.com/user-attachments/assets/83a977fe-20e4-4b3d-9204-286a86d34d88" />
-<img width="1357" height="647" alt="image" src="https://github.com/user-attachments/assets/ee656f5f-e655-4c2b-aad9-d08cc3c2a0c6" />
-<img width="1340" height="622" alt="image" src="https://github.com/user-attachments/assets/c1d85a14-4bcc-48bf-871a-54d1fe5200d4" />
-<img width="1385" height="599" alt="image" src="https://github.com/user-attachments/assets/8056abc4-125a-47bd-8115-7d52e74304ee" />
+<div align="center">
+<img src="https://github.com/user-attachments/assets/5db0e0ac-1b85-48a1-ab15-a2b5088a33ff" />
+<img src="https://github.com/user-attachments/assets/83a977fe-20e4-4b3d-9204-286a86d34d88" />
+<img src="https://github.com/user-attachments/assets/ee656f5f-e655-4c2b-aad9-d08cc3c2a0c6" />
+<img src="https://github.com/user-attachments/assets/c1d85a14-4bcc-48bf-871a-54d1fe5200d4" />
+<img src="https://github.com/user-attachments/assets/8056abc4-125a-47bd-8115-7d52e74304ee" />
+</div>
 
 2. 즉, 다수의 EC2에 트래픽을 분산시켜주는 서비스
 3. 총 4가지 종류
@@ -20,7 +22,9 @@
    - ELB + Auto-Scaling
      + Auto-Scaling을 통해 EC2 인스턴스의 숫자를 관리하고, ELB를 통해 분산 트래픽 처리
      + Auto-Scaling의 인스턴스 증감과 같이 ELB에 연결
-<img width="1389" height="585" alt="image" src="https://github.com/user-attachments/assets/933ab2d4-6223-4080-9f56-498b0f4c1ce7" />
+<div align="center">
+<img src="https://github.com/user-attachments/assets/933ab2d4-6223-4080-9f56-498b0f4c1ce7" />
+</div>
 
 6. 지속적으로 IP 주소가 바뀌며, IP 고정 불가능 : 항상 도메인 기반으로 사용
 7. 대상 그룹 (Target Group)
@@ -29,7 +33,9 @@
      + 대상 종류 : Instance, IP, Lambda, ALB
      + 프로토콜 : HTTP, HTTPS, gRPC, TCP 등
      + 기타 설정 : 트래픽 분산 알고리즘, 고정 세션 등
-<img width="1400" height="673" alt="image" src="https://github.com/user-attachments/assets/12c2550b-0f11-42cd-afb0-97723ff3bdb4" />
+<div align="center">
+<img src="https://github.com/user-attachments/assets/12c2550b-0f11-42cd-afb0-97723ff3bdb4" />
+</div>
 
 8. 리스너 (Listener)
    - ALB로 들어오는 요청을 처리하는 주체 : 들어오는 트래픽의 프로토콜 + 포트 단위
@@ -39,7 +45,9 @@
      + 예) HTTP POST 요청이 들어왔을 경우 지정된 응답 전달 (에러 페이지 등)
    - 규칙을 활용해 다양한 조건에 따라 트래픽 배분 가능 : 활용 가능한 조건) Header, QueryString, Source IP, Method 등
    - 들어온 트래픽 처리 방식 : Forward, Redirect, Fixed-Response, Coginto 인증 등
-<img width="1427" height="831" alt="image" src="https://github.com/user-attachments/assets/417fbed4-f6ef-4f18-b57a-1b79951b4cec" />
+<div align="center">
+<img src="https://github.com/user-attachments/assets/417fbed4-f6ef-4f18-b57a-1b79951b4cec" />
+</div>
 
 9. ALB 비용
     - Provision 시 시간당 비용 청구
@@ -62,15 +70,7 @@
        + 신규 연결 : 1 LCU는 25연결/초, 현재 초당 연결은 1개/초 - 따라서, 1/25 LCU = 0.04 LCU
        + 연결 지속 : 1 LCU는 3000연결/분, 현재 초당 연결은 1연결 X 2분은 120연결, 따라서 120/3000 = 0.04 LCU
        + 트래픽 : 1 LCU는 1GB/시간, 현재 트래픽은 300KB/초 응답 = 1.08 GB/시간, 따라서 1.08/1 = 1.08 LCU
-       + 룰 평기 : 1 LCU는 1,000/초 역할 평가, 현재 룰 갯수는 60, 따라서 (60 - 10(프리)) * 5 = 250/1000 = 0.25 LCU
+       + 룰 평가 : 1 LCU는 1,000/초 역할 평가, 현재 룰 갯수는 60, 따라서 (60 - 10(프리)) * 5 = 250/1000 = 0.25 LCU
        + 가장 높은 것 : 1.08 LCU
        + 따라서, 비용은 (1.08 LCU * $0.008) + $0.0225 = $0.03114
 
-10. 실습 - ALB + Auto-Scaling
-    - 시작 템플릿 생성 : 사용자 데이터(User Data) 스크립트 활용 웹 서버 설치 및 인스턴스 아이디 표시
-    - Auto-Scaling Group 생성 및 테스트
-    - 대상 그룹 생성 + ALB 생성
-    - ALB와 연결 및 테스트
-    - Auto-Scaling Group의 인스턴스 증감에 따른 ALB 연동 확인
-    - Listner 간단 테스트
-    - 리소스 정리 (Connection Draining)
