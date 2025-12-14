@@ -7,7 +7,7 @@
      + AMI : 더 많은 AMI 찾아보기 (Amazon Linux 2023 kernel-6.1 AMI 선택)
      + 인스턴스 유형 : t2.micro
      + 키 페어 : demo-my-ec2-keypair
-     + 보안 그룹 생성 : demo-my-sg (인바운드 보안 그룹 규칙 : 유형 - 모든 트래픽 / 소스 유형 - 위치 무)
+     + 보안 그룹 생성 : demo-my-sg (인바운드 보안 그룹 규칙 : 유형 - 모든 트래픽 / 소스 유형 - 위치 무관)
      + 고급 세부 정보 : IAM 인스턴스 프로파일 (demo-iam-role-for-ec2)
      + 사용자 데이터 입력
 ```bash
