@@ -66,7 +66,7 @@
    - AZRebalance가 비활성화되어있지 않다면, StandBy가 풀리면서 인스턴스 조정 가능
 
 8. AutoScale LifeCycle Hooks
-   - AutoScaling의 각 단계(Pending, Terminating)에서 특정 로직을 수행할 숭 ㅣㅆ는 기능
+   - AutoScaling의 각 단계(Pending, Terminating)에서 특정 로직을 수행할 수 있는 기능
    - 미리 수행 되어야 하는 작업 또는 CI / CD 파이프라인을 통한 배포 등을 수행
 <div align="center">
 <img src="https://github.com/user-attachments/assets/43b2be8c-4daf-41b2-823b-3c896e3174fb" />
