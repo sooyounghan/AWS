@@ -54,32 +54,54 @@
 </div>
 
 3. 다른 보안그룹 (보안그룹 참조)
+
+-----
+### 보안 그룹 및 접두사 목록 활용
+-----
+1. 접두사 목록 활용
+<div align="center">
+<img src="https://github.com/user-attachments/assets/6b6798f6-dc17-475b-9ac3-4d1faaead60b" />
+<img src="https://github.com/user-attachments/assets/4f767f21-53ff-47fb-b2fc-4b0650722b56" />
+<img src="https://github.com/user-attachments/assets/8e05c8ec-7dcd-4811-be33-b5620283ef03" />
+</div>
+
+2. 보안 그룹의 참조 활용
 <div align="center">
 <img src="https://github.com/user-attachments/assets/782e5993-7406-401f-8797-7adb7f2cab8c" />
 <img src="https://github.com/user-attachments/assets/96ac2f05-3db2-457d-9171-175bb559e908" />
 </div>
 
+   - 보안 그룹을 참조하여 설정
 <div align="center">
 <img src="https://github.com/user-attachments/assets/32f7b1e0-cbf2-4caf-8352-0746b892a6df" />
 </div>
 
-4. 보안 그룹 및 접두사 목록
+   - 예시
 <div align="center">
-<img src="https://github.com/user-attachments/assets/6b6798f6-dc17-475b-9ac3-4d1faaead60b" />
-<img src="https://github.com/user-attachments/assets/4f767f21-53ff-47fb-b2fc-4b0650722b56" />
-</div>
-
-<div align="center">
-<img src="https://github.com/user-attachments/assets/8e05c8ec-7dcd-4811-be33-b5620283ef03" />
+<img src="https://github.com/user-attachments/assets/7dd7f7d8-b200-4ac7-a1c2-602a5800be89" />
 <img src="https://github.com/user-attachments/assets/2630b59e-66c2-4e94-abac-a997cb720909" />
 </div>
 
-<div align="center">
-<img src="https://github.com/user-attachments/assets/7dd7f7d8-b200-4ac7-a1c2-602a5800be89" />
-<img src="https://github.com/user-attachments/assets/74d8f60a-03ff-4f5b-8360-6a857f0687a6" />
-</div>
-
 5. Demo - 보안그룹 참조
+    - 보안 그룹을 설정하면, Load Balancer를 우회해서 직접 EC2에 접근하는 것을 막을 수 있음
+    - 즉, 보안 그룹을 생성하여 Load Balancer의 IP 주소를 허용하도록 설정
+      + 하지만, 로드 밸런서는 IP가 계속 변경됨
+      + 따라서, 로드 밸런서용 보안 그룹을 하나 생성하고, EC2 보안 그룹을 생성
+      + 로드 밸런서용 보안 그룹에서 오는 모든 트래픽은 EC2 보안 그룹에서 허용하도록 설정하면 됨
 <div align="center">
 <img src="https://github.com/user-attachments/assets/2fab4f07-c13c-4621-8d2c-e005eb7ad99e" />
 </div>
+
+   - 보안 그룹 생성 : demo-alb-sg
+     + 인바운드 규칙 : 유형 - HTTP
+     + 소스 : 0.0.0.0/0
+   - 보안 그룹 생성 : demo-ec2-sg
+     + 인바드 규칙 : 모든 트래픽 - 소스 : demo-alb-sg (모든 트래픽을 받되, 모든 대상이 아닌 해당 보안 그룹에서 온 트래픽만 받음)
+
+   - (존재하는) EC2 인스턴스에 보안 그룹 적용
+     + EC2 인스턴스 선택 - 우클릭 - 보안 - 보안 그룹 변경 - 보안 그룹 선택 - 기존 것 제거 후 demo - ec2-sg 선택 후 저장
+
+   - 로드 밸런서 보안 그룹 변경
+     + 로드 밸런서 - 작업 - 보안 그룹 편집 - default 대신 demo-alb-sg 선택
+
+     
