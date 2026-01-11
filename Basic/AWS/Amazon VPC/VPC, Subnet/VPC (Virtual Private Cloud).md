@@ -55,3 +55,30 @@
 <img src="https://github.com/user-attachments/assets/1f1da2e8-c8b8-42f6-bf1d-57cebfe2e402" />
 </div>
 
+-----
+### 인터넷 게이트웨이
+-----
+1. VPC가 외부의 인터넷과 통신할 수 있도록 경로를 만들어주는 리소스
+2. 기본적으로 확장성과 고가용성이 확보되어 있음
+3. IPv4, IPv6 지원 : IPv4의 경우 NAT 역할
+4. Router Table에서 경로 설정 후 접근 가능
+5. 무료
+<div align="center">
+<img src="https://github.com/user-attachments/assets/e9e041f5-ee4a-47b7-b8d3-91d0b9198a3f" />
+<img src="https://github.com/user-attachments/assets/550be4a4-22c4-4995-bacb-de0f5aba6094" />
+<img src="https://github.com/user-attachments/assets/67af809d-9707-4316-9af0-f5a17c944208" />
+</div>
+
+-----
+### 기본 VPC와 커스텀 VPC
+-----
+1. 기본 VPC
+   - AWS 계정 생성 시 자동으로 생성되어 있음
+   - 기본적으로 각 AZ마다 서브넷 생성 : 모든 서브넷에 인터넷 접근이 가능(= Public Subnet)
+   - 다양한 AWS 서비스가 기본 VPC를 이용하므로, 삭제 시 여러 AWS 서비스의 사용에 제약
+
+2. 커스텀 VPC
+   - 직접 생성
+   - 기본적으로 인터넷에 연결되어 있지 않음
+     + 인터넷 게이트웨이와 라우팅 설정 없이 Public Subnet 생성 불가능
+     + 즉, 별도의 조치 없이 인터넷으로 연결 가능한 EC2 생성 불가능능
