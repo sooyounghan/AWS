@@ -18,3 +18,16 @@
 <div align="center">
 <img src="https://github.com/user-attachments/assets/aac4be73-d304-4eaf-b71c-fc54dd5d7fd2" />
 </div>
+
+-----
+### 서브넷의 종류
+-----
+1. Public Subent : 외부에서 인터넷을 통해 연결할 수 있는 서브넷
+   - 인터넷 게이트웨이(IGW)를 통해 외부의 인터넷과 연결되어 있음
+   - 안에 위치한 인스턴스에 Public IP 부여 가능
+   - 웹 서버 / 애플리케이션 서버 등 유저에게 노출되어야 하는 인프라
+
+2. Private Subnet : 외부에서 인터넷을 통해 연결할 수 없는 서브넷
+   - 외부 인터넷으로 경로가 없음
+   - Public IP 부여 불가능
+   - 데이터베이스, 로직 서버 등 외부에 노출 될 필요가 없는 인프라
