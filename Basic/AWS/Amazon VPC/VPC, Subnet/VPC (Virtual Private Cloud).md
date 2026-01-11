@@ -33,3 +33,25 @@
    - NAT Instance / NAT Gateway
    - Bastion Host
    - VPC Endpoint  
+
+-----
+### VPC Router
+-----
+1. VPC에 있는 가상 라우터로 서브넷에서 오고가는 트래픽을 라우팅 : 즉, 모든 서브넷의 트래픽은 VPC 라우터를 거쳐서 목적지에 도달
+2. VPC 생성 시 자동으로 생성되며, 별도로 관리할 필요가 없음 : 별도 설정은 불가능하며, Router Table만 관리 가능
+
+-----
+### Rotue Table
+-----
+1. VPC 라우터에서 트래픽이 어디로 가야할지 알려주는 이정표
+2. VPC 생성 시 기본으로 하나 제공
+3. 구성 요소
+   - Destination : 트래픽이 가고자 하는 주소
+   - Target : 트래픽을 실제로 보내줄 대상 (논리적 리소스 아이디로 표현[예) Internet Gateway의 경우 IGW-xxxxxx)
+<div align="center">
+<img src="https://github.com/user-attachments/assets/61811df8-80aa-4537-b39b-26b48a0c98ab" />
+<img src="https://github.com/user-attachments/assets/7b421e4d-1dd6-4de9-87ef-10b23443ba4c" />
+<img src="https://github.com/user-attachments/assets/ae586a4a-4487-48d0-9235-15468d8470b5" />
+<img src="https://github.com/user-attachments/assets/1f1da2e8-c8b8-42f6-bf1d-57cebfe2e402" />
+</div>
+
