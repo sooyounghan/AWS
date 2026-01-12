@@ -79,7 +79,7 @@
 ```
 sudo -s
 nano keyfile.pem (cntrl x, y, 엔터) // keypair.pem 내용
-chmod 400 keyfile.pem // 권한 부
+chmod 400 keyfile.pem // 권한 부여
 ssh -i "keyfile.pem" ec2-user@instance_ip // private instnace 연결
 ```
 ```
@@ -115,7 +115,7 @@ curl google.com
 ```
 sudo -s
 nano keyfile.pem (cntrl x, y, 엔터) // keypair.pem 내용
-chmod 400 keyfile.pem // 권한 부
+chmod 400 keyfile.pem // 권한 부여
 ssh -i "keyfile.pem" ec2-user@instance_ip // private instnace 연결
 ```
 ```
