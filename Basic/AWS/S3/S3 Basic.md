@@ -45,6 +45,25 @@
 </div>
 
    - S3 버킷 생성
+     + 버킷 만들기 - demo-my-s3-bucket-{계정 ID}
+     + ACL 비활성화 (기본값)
+   
    - 파일 업로드
+     + 업로드 - 파일 추가 - 해당 파일 업로드
+
    - S3 접근 권한을 가진 EC2 IAM 역할 생성
+     + 역할 - 역할 생성 - EC2 - AmazonS3FullAccess 선택 - demo-ec2-role-s3-fullacess
    - EC2 시작 구성 생성 : 유저데이터에서 S3 파일을 가져와 적용하도록 설정
+     + demo-s3-test
+     + 키 페어 없이 계속 진행
+     + 기존 보안 그룹 선택 : default (인바운드, 아웃바운드 모두 개방)
+     + 고급 세부 설정
+       * IAM 인스턴스 프로파일 : demo-ec2-role-s3-fullacess
+       * 사용자 데이터
+```
+sudo -s
+dnf install httpd -y
+service httpd start
+chkconfig httpd on 
+aws s3 cp s3://[버킷명]/index.html /var/www/html  --region ap-northeast-2  // 버킷의 index.html 파일을 /var/www/html 경로에 넣어줌
+```
