@@ -61,9 +61,12 @@
        * IAM 인스턴스 프로파일 : demo-ec2-role-s3-fullacess
        * 사용자 데이터
 ```
+#!/bin/bash
 sudo -s
 dnf install httpd -y
 service httpd start
-chkconfig httpd on 
-aws s3 cp s3://[버킷명]/index.html /var/www/html  --region ap-northeast-2  // 버킷의 index.html 파일을 /var/www/html 경로에 넣어줌
+chkconfig httpd on
+aws s3 cp s3://[버킷명]/index.html /var/www/html  --region ap-northeast-2
 ```
+
+   - 리소스 정리 : EC2 인스턴스 종료 / S3 버킷 종료 (버킷 비우기 먼저 실시)
