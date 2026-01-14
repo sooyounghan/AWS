@@ -4,7 +4,7 @@
 1. VPC 피어링 연결은 프라이빗 IPv4 또는 IPv6 주소를 사용하여 두 VPC 간에 트래픽을 라우팅할 수 있도록 하기 위한 두 VPC 사이 네트워킹 연결
 2. 동일한 네트워크에 속하는 경우와 같이 VPC의 인스턴스가 서로 통신할 수 있음
 3. 즉, 두 개의 다른 VPC를 연결하여 VPC 안의 리소스끼리 통신이 가능하도록 설정하는 것
-4. 다른 리전, 다른 계정의 VPC끼리 연결 가능
+4. 💡 다른 리전, 다른 계정의 VPC끼리 연결 가능
 5. CIDR Range의 중첩 불가능
 <div align="center">
 <img src="https://github.com/user-attachments/assets/6c1f0683-b913-4635-a481-ff60986c72e4" />
@@ -18,14 +18,18 @@
 <img src="https://github.com/user-attachments/assets/86d142d2-076b-4f94-b70b-cb34bf171172" />
 </div>
 
+7. AWS Transit Gateway
+   - 중앙 허브를 통해 VPC들과 온프레미스 네트워크를 연결하는 서비스
+   - 복잡한 Peering 관계를 제거하여 간소화
+   - Region 간에는 서로 다른 Transit Gateway 끼리 연결
 
-7. Peering 설정 이후 라우팅 테이블을 업데이트해서 경로 설정 필요
+8. 💡 Peering 설정 이후 라우팅 테이블을 업데이트해서 경로 설정 필요
 <div align="center">
 <img src="https://github.com/user-attachments/assets/0d481d9b-36d6-4d67-9fa8-a79688b3abc0" />
 </div>
 
 -----
-### AWS VPN (Virtual Private Network0
+### AWS VPN (Virtual Private Network)
 -----
 1. 온프레미스 네트워크, 원격 사무실, 클라이언트 디바이스 및 AWS 글로벌 네트워크 사이에서 보안 연결 설정
 2. Site-to-Site VPN
@@ -56,13 +60,6 @@
 </div>
 
 -----
-### AWS Transit Gateway
------
-1. 중앙 허브를 통해 VPC들과 온프레미스 네트워크를 연결하는 서비스
-2. 복잡한 Peering 관계를 제거하여 간소화
-3. Region 간에는 서로 다른 Transit Gateway 끼리 연결
-
------
 ### Amazon EFS
 -----
 <div align="center">
@@ -70,10 +67,49 @@
 </div>
 
 -----
-### Demo - VPC Peering
+### Demo - VPC Peering (도쿄 리전)
 -----
 1. VPC 1과 VPC 2를 연결
+   - VPC 생성 (VPC 등)
+     + my-vpc-1 / 10.0.0.0/16 / VPC 엔드포인트 없음
+     + my-vpc-2 / 10.1.0.0/16 / VPC 엔드포인트 없음 
    - VPC Peering 연결
+     + 피어링 연결 - 피어링 연결 생성 - VPC ID 설정 - 계정 : 내 계정 - my-vpc-2
+     + 작업 - 요청 수락
+     + DNS - DNS 설정 편집 - 요청자 / 수락자 DNS 확인 - 변경 사항 저장
    - 라우팅 테이블에 연결 추가
+     + Public Subnet 연결 (my-vpc-1-rtb-public에서 my-vpc-2-rtb-public)
+     + my-vpc-1-rtb-public 선택 - 라우팅 - 라우팅 편집
+       * 10.1.0.0/16
+       * 피어링 연결
+       * my-vpc-peering
 
-2. VPC 1의 EC2에서 VPC 2의 EC2에 Private IP로 연결
+     + my-vpc-2-rtb-public 선택 - 라우팅 - 라우팅 편집
+       * 10.0.0.0/16
+       * 피어링 연결
+       * my-vpc-peering
+
+3. VPC 1의 EC2에서 VPC 2의 EC2에 Private IP로 연결
+    - demo-vpc-1
+      + 네트워크 설정 - VPC : my-vpc-1-vpc / my-vpc-public1 서브넷 설정 / 퍼블릭 IP 자동 할당 활성화
+      + 기존 보안 그룹 선택 : default
+
+    - demo-vpc-2
+      + 네트워크 설정 - VPC : my-vpc-2-vpc / my-vpc-public2 서브넷 설정 / 퍼블릭 IP 자동 할당 활성화
+      + 기존 보안 그룹 선택 : default
+
+    - 보안 그룹 설정 (💡 해당 EC2 보안 그룹만 설정 - 기존 default는 건드리지 말 것)
+      + 인바운드 규칙 - 기존 삭제 후, 모든 트래픽 / 0.0.0.0/0
+    - demo-vpc-2 접속
+```
+sudo -s
+dnf install httpd -y
+service httpd start
+```
+   - demo-vpc-2의 Private IP를 통해 demo-vpc-1에서 확인
+```
+sudo -s
+curl {demo-vpc-2의 Private IP}
+```
+
+4. 리소스 정리 : EC2 종료, VPC 피어링 삭제(관련 라우팅 테이블 항목 삭제), VPC 삭제
