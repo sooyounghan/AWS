@@ -2,30 +2,27 @@
 ### S3의 업로드, 다운로드 방법
 -----
 1. AWS Web Console
-2. AWS SDK / AWS CLI
+2. AWS SDK / AWS CLI (IAM 접근 권한 필요)
 3. 일반 URL (버킷 / 파일이 공개되어있을 경우, 다운로드만 가능)
 4. 미리 서명된 URL (Presigned URL)
 
 -----
 ### 파일 공유하는 방법
 -----
-1. 영상 공유 서비스
+1. 예) 영상 공유 서비스
 2. 인증 정보 : IAM 유저, Access Key ID / Secret Access Key
 <div align="center">
 <img src="https://github.com/user-attachments/assets/ec7975f7-6bd3-4ad9-9b34-c872f6662fa1" />
 </div>
 
------
-### 수동 파일 공유 문제점
------
-1. IAM 유저 개수 제한
-2. 관리가 어려움
-3. 만료 기간 설정이 어려움
-4. 유출 시 모두에게 다시 공유 필요
-5. 세세한 권한 조절 불가능
+3. 수동 파일 공유 문제점
+   - IAM 유저 개수 제한
+   - 관리가 어려움
+   - 만료 기간 설정이 어려움
+   - 유출 시 모두에게 다시 공유 필요
+   - 세세한 권한 조절 불가능
 <div align="center">
 <img src="https://github.com/user-attachments/assets/1e5aa7b8-eb70-4902-ab3a-4bdfe1866146" />
-<img src="https://github.com/user-attachments/assets/38a3f6c0-7190-4025-92e8-1d7e5d0b5913" />
 <img src="https://github.com/user-attachments/assets/4f8521d8-c4e4-4622-901a-88bf5f74884d" />
 </div>
 
@@ -52,7 +49,9 @@
    - 업로드 로직이 단일 파트보다 조금 더 복잡
    - 업로드에서 발생하는 파일들의 관리 포인트가 증가
 4. AWS에서는 100 MB 이상 파일을 업로드할 경우 멀티파트 업로드 권장
-<img width="1342" height="643" alt="image" src="https://github.com/user-attachments/assets/d9204ffe-aa4c-4b84-8c59-c08ca737147a" />
+<div align="center">
+<img src="https://github.com/user-attachments/assets/d9204ffe-aa4c-4b84-8c59-c08ca737147a" />
+</div>
 
 -----
 ### 주의사항
@@ -61,3 +60,51 @@
 2. 비용이 발생
    - S3 Storge Lens 등의 서비스로 현재 완료되지 않은 멀티파트 업로드 파일 확인 가능
    - S3 생명 주기 설정을 통해 일정 시간 이후 삭제 가능 (예) 완료되지 않은 멀티파트 업로드의 경우 7일 후 삭제)
+
+-----
+### Demo - S3 Upload / Download 실제 구현 
+-----
+1. 실제 백엔드 / 프론트엔드 기반으로 S3 업로드 / 다운로드 구현
+   - IAM 권한 생성 : admin 사용 (보안자격증명 - 액세스 키 만들기 - 기타로 생성)
+   - VS Code로 demo_s3_upload_download_backend 폴더 열기
+
+2. AWS Serverless 서비스인 Lambda 기반 백엔드
+```
+1. Node.js 18 이상 설치 (npm도 같이 설치)
+2. AWS CLI 설치
+3. yarn 설치 : npm install yarn -g
+4. aws configure --profile{프로파일 명} 으로 프로파일 생성 (aws configure --profile s3-upload)
+    - 액세스 키 작성
+    - 시크릿 액세스 키 작성
+    - Default Region : ap-northeast-2
+5. 디펜던시 가져오기 : yarn install
+6. 프로비전 : yarn deploy --aws-profile [자신의 프로파일 명] (yarn deploy --aws-profile s3-upload)
+```
+
+3. React 기반 프론트엔드
+   - 설치 순서
+```
+1. node18 이상
+2. npm install -g yarn
+3. yarn 
+4. .env 파일 수정
+5. yarn start
+```
+   - demo-s3-presigned-url-frontend 프로젝트 내 .env 파일에 다음 추가
+```
+REACT_APP_API_PATH=https://7opt1r4tt9.execute-api.ap-northeast-2.amazonaws.com/dev/
+WDS_SOCKET_PORT=0
+```
+   - 실행된 애플리케이션을 바탕으로 파일 업로드 후 확인 : S3 버킷 (362454057659-presigned-upload : 파일 업로드) 및 개발자 도구를 통해 확인
+   - 파일 다운로드 : 파일 키 입력 후 다운로드
+   - 빌드 후 배포 순서
+```
+1. yarn build
+2. package.json 파일 수정
+3. yarn deploy
+```
+
+4. 리소스 정리
+   - 액세스 키 삭제
+   - S3 삭제
+     + CloudFormation - demo-s3-presigned-url-dev-1-serverless (모아둔 프로비전 스택) 삭제
