@@ -1,0 +1,48 @@
+-----
+### S3의 생명주기
+-----
+1. 수명 주기
+   - 일정 기간 이후 오브젝트에 상태 변경 가능
+     + 전환 작업 (Transition Actions) : 다른 스토리지 티어로 옮기기
+       * 예) 30일 후 아카이브(Glacier)로 보내기
+       * 예) 50일 후 객체를 IA로 보내기
+     + 만료 작업 (Expiration Actions) : 오브젝트를 삭제
+   - 수명 주기 설정 시 소급 적용 (예) 30일 이후 만료 작업을 설정했다면, 기존 버킷의 30일 이상된 오브젝트도 같이 적용)
+   - 필터 및 날짜 적용 가능
+     + 예) /image/thumbnail/production 디렉토리의 5MB 이상 파일을 30일 뒤 모두 아카이브
+     + 예) 2024-05-30일부터 /image/dev 디렉토리에 1MB 이상 이미지 모두 삭제
+
+2. 전환 작업 : 일정 시간 이후 오브젝트 스토리지 클래스 변경
+   - Waterfall 모델
+<div align="center">
+<img src="https://github.com/user-attachments/assets/f73119af-005a-4af1-be25-bda999e37734" />
+</div>
+
+   - 제약사항
+     + 예) 다른 클래스 : Standard로 변경 불가능
+     + 예) 128KB 미만 파일의 경우 Standard/IA → S3-Inteligent or Glacier Instant Retrieval 불가능
+
+3. 만료 작업
+   - 버저닝에 따른 다른 방식
+     + 버저닝이 없을 떄 : async로 영구 삭제
+     + 버저닝이 있을 때 : Delete Marker가 현재 version이 아니라면 Marker 추가 후 현재 버전으로 격상 (현재 버전이 Delete Marker라면 동작하지 않음)
+   - 삭제 날짜에 바로 삭제되지 않고 일정 딜레이 발생 가능
+     + 그 동안 비용은 없음
+     + HeadObject / GetObject API로 삭제 예정 확인 가능
+   - UTC 기준 정각에 수행되며, 첫 번째 Rule은 약 48시간 정도 소요 가능
+   - 실패한 멀티파트 업로드 파일 삭제 설정도 여기서 가능
+
+4. 조건
+   - 객체의 수명 : 전환 혹은 생성부터 일정 기간 경과 후 효과 발생
+   - 날짜
+     + 특정 날짜부터 효과 발생, (단, 콘솔로 설정 불가능 (확인만 가능)
+     + 예) 5월 30일부터 모든 오브젝트 삭제 (이 경우, 5월 30일 이후 다른 오브젝트가 추가되어도 바로 삭제됨)
+   - 필터 : 두 조건 모두 필터링의 조건을 만족해야 발동
+     + 특정 조건으로 필터링 가능
+       * prefix: (예) /log, /log/production, /image/thumbnails)
+       * tag
+         * 특정 태그가 있을 때
+         * AND로 연결 가능
+       * 오브젝트 사이즈
+     + 필터링 조건 조합 가능 (예) /image prefix에 5MB 이상 파일)
+     
