@@ -39,13 +39,59 @@
    - RDS에 IAM DB 인증을 활용하여 접속
 
 2. 기본 VPC에 두 개의 프라이빗 서브넷 생성 : 라우트 테이블 역시 생성
+   - my-db-vpc : 프라이빗 서브넷 수 0, VPC 엔드포인트 없음
+   - 보안 그룹 - default 보안그룹, 생성된 보안 그룹 중 생성된 보안 그룹 인바인드 규칙 편집에서 삭제 후 모든 트래픽 새로 규칙 추가
+   - 서브넷 생성 : my-db-vpc / my-private-subnet-1, 2 / 가용 영역 2a, 2d / 10.0.32.0/20, 10.0.48.0/20
 3. 프라이빗 서브넷에 RDS를 프로비전
-4. Bastion Host를 통해 RDS 접속 확인
+   - RDS - 서브넷 그룹 - DB 서브넷 그룹 생성 - My-Private-Subnet-Group, VPC는 my-db-vpc 선택
+   - 서브넷 : my-private-subnet-1, 2
+   - RDS 생성
+     + MySQL
+     + 프리티어
+     + My-DB
+     + 자체 관리 : 암호 설정
+     + 퍼블릭 액세스 허용하지 않음
+     + VPC 보안 그룹 : 기존 항목 선택
+     + Virtual Private Cloud(VPC) : my-db-vpc
+     + 데이터베이스 인증 옵션 : 암호 및 IAM 데이터베이스 인증 
+4. Bastion Host 생성
+   - EC2 : My-Bastion-Host
+   - 키 페어 생성 : My-DB-Keypair
+   - 네트워크 설정 - VPC : my-db-vpc
+     + 퍼블릭 IP 자동 할당
+     + 서브넷 : public subnet 선택
+
+6. Bastion Host를 통해 RDS 접속 확인
    - ID / Password
+     + Connect Method : Standard TCP/IP over SSH
+     + SSH Hostname : My-Bastion-Host EC2의 Public IPv4 DNS
+     + SSH Username : ec2-user
+     + SSH Key File : 생성한 키 페어
+     + MySQL Hostname : RDS 엔드포인트
+     + username : admin
    - IAM DB 인증 토큰으로 RDS 접속 확인
+     + MySQL에 특정 유저에게 IAM DB 인증을 할 수 있도록 등록 / DB 생성 : db_my_test
+```
+CREATE USER 'testuser' IDENTIFIED WITH AWSAuthenticationPlugin AS 'RDS'; 
+```
+   - 모든 권한 부여
+```
+GRANT ALL PRIVILEGES ON db_my_test.* TO 'testuser'@'%';
+```
+   - CloudShell
+     + region : 현재 사용 Region
+     + account_id : 계정 ID
+     + db_resource_id : RDS - 구성 - 리소스 ID
 <div align="center">
 <img src="https://github.com/user-attachments/assets/08a769aa-84a3-457d-9477-ea425fb5f3fa" />
 <img src="https://github.com/user-attachments/assets/fce92b1c-0ff4-4a81-870a-8e49c4fcf91e" />
 </div>
 
- 
+   - 명령어 : 암호문(토큰) 생성
+```
+aws rds generate-db-auth-token --hostname {rds_dns}  --port 3306 --region ap-northeast-2 --username testuser
+```
+   - my-db-test-connection : Username에 testuser / Password는 토큰 붙여넣기
+     + Advanced - Enable Cleartext Authentication Plugin 체크
+
+7. 리소스 정리 : RDS 정리 / EC2 정리 / VPC 정리
