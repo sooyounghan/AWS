@@ -97,3 +97,42 @@
 -----
 ### Demo - RDS Provision
 -----
+1. Aurora and RDS 생성
+   - 데이터베이스 생성 : Maria DB
+   - 템플릿 : 프리 티어
+   - DB 인스턴스 식별자 : My-Database
+   - 마스터 암호 설정
+   - 인스턴스 구성
+   - EBS (스토리지) 설정
+   - 다중 AZ 배포
+   - VPC 선택 : EC2 기반이므로 선택 (default 선택)
+   - 퍼블릭 액세스 : 기본 아니오 (예로 선택)
+   - 보안 그룹 선택 : default 보안 그룹 선택
+   - 가용 영역 : 별도 설정 없음
+   - 데이터베이스 인증 : 암호 인증
+   - 향상된 모니터링 활성화 X
+   - 로그 내보내기를 설정하지 않으면, 해당 로그들이 출력되지 않으므로 체
+   - 추가 구성
+     + 초기 데이터베이스 이름 : mydb
+     + DB 파라미터 그룹 설정 가능
+     + 백업 보존 기간 및 백업 기간 설정 가능
+
+2. 생성된 RDS를 DB(MySQL)에 연결
+   - 생성된 RDS의 엔드포인트 복사 후, MySQL에 MySQL Connections 옆 + 선택
+   - Connection Name : my-db-test-connection
+   - Hostname은 엔드포인트 설정
+   - Username은 admin
+   - Password는 RDS 생성 시 부여한 비밀번호
+   - ```select now()``` : DB 파라미터 그룹에서 Default 타임 존이 현재 UTC로 설정되어 있으므로 한국 시간 기준 9시간 전
+     + 변경 방법 : 파라미터 그룹 생성
+     + 서브넷 그룹 - 파라미터 그룹 - 파라미터 그룹 생성 - my-parameter-group / 엔진 : MariaDB / 파리미터 그룹 패밀리 : 호환되는 DB 버전 (My-Database 구성 확인)
+     + 설명 필요
+     + 파라미터 그룹에서 time_zone 검색하면 Default
+     + 편집을 눌러서 변경 : Asia/Seoul으로 변경 후 저장
+     + RDS에 적용 : 추가 구성 - 데이터베이스 옵션 - DB 파라미터 그룹 - my-parameter-group 
+     + DB 재부팅이 필요하므로 작업 - 재부팅 실시
+
+3. 리소스 정리 : DB - 작업 - 삭제
+   - 최종 스냅샷 생성 해제
+   - 자동 백업 보존 해제
+     
