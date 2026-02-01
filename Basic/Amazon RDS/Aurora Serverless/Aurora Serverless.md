@@ -2,7 +2,7 @@
 ### Aurora Serverless
 -----
 1. Amazon Aurora의 On-Demand Auto-Scaling 구성
-2. 애플리케이션 요구 사항을 기반으로 자동으로 시작 및 종료하고, 용량을 확장 및 축소
+2. 애플리케이션 요구 사항을 기반으로 자동으로 시작 및 종료하고, 용량을 확장 또는 축소
 3. 이를 사용하면 데이터베이스 용량을 관리하지 않고도, 클라우드에서 데이터베이스 실행 가능
 4. Aurora의 Serverless 버전
    - 즉, 인스턴스를 미리 프로비전하거나 관리할 필요가 없음
@@ -18,7 +18,7 @@
 <div align="center">
 <img src="https://github.com/user-attachments/assets/a4d6964f-57c1-4456-a6bf-5226407ea88f" />
 <img src="https://github.com/user-attachments/assets/2146f406-cc6d-4c9f-a190-f6e8541e5336" />
-div>
+</div>
 
 7. 주요 사용 사례 : 개발용 리소스, Read Replica, Fail-Over 대비 리소스 등
 
@@ -27,7 +27,7 @@ div>
 -----
 1. Aurora Serverless의 Scale 단위
 2. 1 ACU = 약 2GB RAM, CPU, 네트워크
-3. 최소 / 최대 ACU 설정 가능 : 최소 0 ~ 최대 256 (버전별 차이 존재)
+3. 최소 / 최대 ACU 설정 가능 : 최소 0 (유휴 모드) ~ 최대 256 (버전별 차이 존재)
 4. 요금 역시 ACU 소모량에 따라 과금
 5. 버전별 ACU
 <div align="center">
@@ -57,6 +57,25 @@ div>
 -----
 1. 5분동안 트래픽 / 트랜잭션이 없는 경우 ACU를 0으로 낮추어 유휴 상태로 진입
 2. 이후, 트래픽 발생 시 다시 0.5+ ACU 상태로 진입
+3. RDS 데이터베이스 생성
+   - Aurora (MySQL Compatible) (개발 / 테스트) : my-aurora-serverless 및 자체 관리로 암호 생성
+   - 인스턴스 구성 - DB 인스턴스 클래스
+     + 서버리스 v2
+     + 비활성 상태 후 일시 중지 (유휴) : 5분
+   - 퍼블릭 액세스 허용
+
+4. my-aurora-serverless
+   - 로그 및 이벤트 : 최근 이벤트가 DB 클러스터 생성 확인 가능
+   - 모니터링 : 현재 사용하고 있는 ACU 확인 가능
+     + ServelessDatabaseCapacity : 데이터베이스가 실제 사용하고 있는 ACU
+
+5. 데이터베이스 접속
+   - my-db-test-connection에 연결
+   - 종료 후 5분 대기 후 모니터링으로 ACU 확인하면, 0으로 떨어져 유휴 상태임을 볼 수 있음
+   - 로그 및 이벤트를 보면, Pause 관련 로그 확인 가능
+   - 새롭게 커넥션을 맺으면, Serverless 가동 시간으로 인해 시간 소요 : Resume 단계 발생 (15초 동안 Cold-Start)
+
+6. 리소스 정리 - RDS 인스턴스 정리 후, RDS 정리
 
 -----
 ### 알아둘 점
