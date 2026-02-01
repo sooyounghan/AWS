@@ -121,7 +121,7 @@ async function runTest() {
         const secret = JSON.parse(res.SecretString);
         let dbinfo = {
             connectionLimit: 100,
-            host: process.env.rds_proxy_host, // 프록시로 접
+            host: process.env.rds_proxy_host, // 프록시로 접근
             user: secret?.username,
             password: secret?.password,
             port: 3306,
