@@ -1,7 +1,7 @@
 -----
 ### Amazon CloudWatch 로그
 -----
-1. AWS 서비스 및 온프레미스 서비스에서 수집한 로그를 저장하고 관리하고 확인할 수 있는 서비스 : AWS 대부분 서비스와 기본적으로 연동 (예) AWS Lambda 등)
+1. 💡 AWS 서비스 및 온프레미스 서비스에서 수집한 로그를 저장하고 관리하고 확인할 수 있는 서비스 : AWS 대부분 서비스와 기본적으로 연동 (예) AWS Lambda 등)
 2. 로그 관리 및 활용을 위한 다양한 기능 제공
    - 로그 모으기 : 다양한 계정에서 하나의 계정으로 모아 관리
    - 실시간 모니터링
@@ -36,13 +36,13 @@
 <img src="https://github.com/user-attachments/assets/c3cd90b7-4608-493e-8c00-ac45cb2509c8" />
 </div>
 
-5. AMetric Filter
+5. Metric Filter
    - CloudWatch Log에 필터를 걸어 필터링 된 로그를 지표화시켜주는 기능
    - 특정 필터 패턴과 일치하는 로그만 지표화
-      + 예) { $,.eventType="8" && $.sourceIPAddresss!=123.123.* }
+      + 예) ```{ $,.eventType="*" && $.sourceIPAddresss!=123.123.* }```
       + 다양한 비교 및 정규식 적용 가능
 
-   - 필터가 적용된 시점부터 지표화
+   - 💡 필터가 적용된 시점부터 지표화
 
 6. 기타 기능
    - Live Tailing : 실시간으로 올라오는 로그를 확인하는 방법 (콘솔 / CLI 활용 가능)
@@ -56,4 +56,18 @@
 ### Demo
 -----
 1. 로컬 애플리케이션으로 CloudWatch 로그 생성 : 로그 그룹 / 로그 스트림 구조 확인
+    - CloudWatch 권한을 가진 IAM 생성 : 사용자 생성 - demo-my-cluodwatch-user / CloudWatchFullAccessV2 - 이후, 보안 자격 증명에서 액세스 키 만들기 - 기타
+    - generateLog.js에 액세스 키와 비밀 액세스 키 입력
+    - 프로젝트 루트 디렉토리 명령어 실행
+```
+npm install @aws-sdk/client-cloudwatch-logs
+```
+   - 디버깅 모드로 코드 실행
+   - CloudWatch 로그 그룹 확인 (로그 - Log Management) : my-log-group
+     + 테일링 시작
+     
 2. CloudWatch Insight로 다양한 쿼리 및 시각화 확인
+   - 로그 - Logs Insights - 로그 그룹 선택 (my-log-group)
+   - insight_queries.txt의 쿼리 실행 : 시각화 가능
+
+
