@@ -53,7 +53,7 @@
 -----
 1. CloudTrail 생성 및 모니터링 확인
     - CloudTrail - 추적 생성 - Demo-My-Trail / 새 S3 버킷 생성 / AWS KMS (Key Management System) : Demo-Cloud-Trail-KMS / CloudWatch Logs - 활성화 됨 / IAM 역할 생성 필요 - CloudTrailRoleForCloudWatch-My-Demo-Trail
-    - 관리 이벤트, 데이터 이벤트 선택 - 리소스 유형 : S3 / 모든 이벤트 로
+    - 관리 이벤트, 데이터 이벤트 선택 - 리소스 유형 : S3 / 모든 이벤트 로그
       
 2. CloudTrail 생성 : Data Event 수집 활성화
    - EC2 : demo-my-ec2 / 보안 그룹 default
