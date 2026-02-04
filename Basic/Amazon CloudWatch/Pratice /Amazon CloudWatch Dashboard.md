@@ -21,7 +21,7 @@
    - AutoScaling - demo-cw-asg / 시작 템플릿 : demo-cw-template / 가용 영역 모두 선택 / 최대 용량 2 / 태그 : Name - Demo-Cw-Asg
   
 5. CloudFormation
-   - 스택 생성 - 템플릿 파일 업로드 - cloudformation_template.txt 파일 업로드 - demo-cloudwatch-dashboard / 파라미터 : demo-cw-asg
+   - 스택 생성 - 템플릿 파일 업로드 - cloudformation_template.yaml 파일 업로드 - demo-cloudwatch-dashboard / 파라미터 : demo-cw-asg
 
 6. CloudWatch 대시 보드 확인
    - 람다 함수 간접 호출 선택
@@ -68,4 +68,4 @@ User: arn:aws:sts::362454057659:assumed-role/CWDBSharing-PublicReadOnlyAccess-V1
      + 권한 조절 필요 (동일)
 
 7. 리소스 정리
-   - Auto-Scaling 그룹 / CloudFormation 에서 삭제하면 리소스 모두 삭
+   - Auto-Scaling 그룹 / CloudFormation 에서 삭제하면 리소스 모두 삭제
