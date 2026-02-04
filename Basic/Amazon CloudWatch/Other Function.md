@@ -10,7 +10,7 @@
 
 2. Amazon CloudWatch Synthesis
    - 일정 기반으로 구성 가능한 스크립트인 Canary를 수행해 엔드포인트 및 API를 모니터링 할 수 있는 서비스
-     + Canary : Puppeteer 또는 Selenium Webdricver를 통해 헤드리스 Google Chrome 브라우저에 여러 액션 수행
+     + Canary : Puppeteer 또는 Selenium Webdriver를 통해 헤드리스 Google Chrome 브라우저에 여러 액션 수행
        * Node.js 혹은 Python으로 코딩 가능
        * 1 ~ 60분 간격으로 수행 설정 가능
      + 주기적으로 실행되어 엔드포인트의 상태를 확인하고 에러 혹은 평소와 다른 내용이 있다면 기록
