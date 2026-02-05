@@ -2,7 +2,7 @@
 ### Amaazon SNS 메세지 구성 (Standard)
 -----
 1. Message Body : 실제 메세지 내용 (String)
-   - 제목 / 내용
+   - 제목 / 💡 내용
    - 최대 256 KB (Message Attribute 포함)
    - 크기가 큰 컨텐츠의 경우 S3에 저장 후 버킷 / 키 정보만을 저장하는 형식으로 전달 가능
    - Raw Message Delivery : SNS 메세지 포맷을 따르지 않고, 전달받은 메세지 그대로 전달 (주로 S3 로깅, SQS 등 메세지를 파싱하지 않고, 있는 그대로 처리해야 할 경우 활용)
