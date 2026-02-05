@@ -4,7 +4,7 @@
 1. SQS에서 전달하는 데이터 단위
 2. 최대 사이즈 : 1 MB, 최대 14일까지 저장 가능
 3. SQS 메세지는 총 3가지 상태
-   - Stored : Producer가 메세지를 SQS Queue에 전달을 완료하여 대기 중인 상태 (최대 개수 제한 업음)
+   - Stored : Producer가 메세지를 SQS Queue에 전달을 완료하여 대기 중인 상태 (최대 개수 제한 없음)
    - In Flight : Consumer가 메세지를 가져와서 처리중인 상태 (Standard 약 120,000개 / FIFO 약 20,000개)
    - Deleted : Consumer가 메세지 내용 처리 후 삭제한 상태
 <div align="center">
