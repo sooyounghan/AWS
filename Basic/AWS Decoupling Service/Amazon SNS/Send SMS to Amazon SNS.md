@@ -12,7 +12,7 @@
 
      + Origination Numbers : 받은 사람에게 보이는 전달자 번호
 
-2. Amazon SNS SMS Sandbox
+2. Amazon SNS / SMS Sandbox
    - 최초로 제공되는 환경으로 테스트 및 준비 진행
    - Sandbox에 있을 때는 지정된 번호로만 문제 메세지 가능
      + 최대 10개
