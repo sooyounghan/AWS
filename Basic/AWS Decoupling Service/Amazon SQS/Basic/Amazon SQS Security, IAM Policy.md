@@ -14,7 +14,7 @@
      + 해당 자격 증명이 무엇을 할 수 있는지 허용
 
    - Resource-Based Policies (리소스 기반 정책)
-     + 리소스 (예) S3, SQS, VPC Endpoint, KMS 등)에 부여한느 정책
+     + 리소스 (예) S3, SQS, VPC Endpoint, KMS 등)에 부여하는 정책
      + 해당 리소스에 누가, 무엇을 할 수 있는지 허용 가능 (예) SQS 대기열에 Lambda Service가 접근 가능)
 
 3. 암호화
