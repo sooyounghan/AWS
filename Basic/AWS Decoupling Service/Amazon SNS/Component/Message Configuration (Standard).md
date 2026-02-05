@@ -12,7 +12,7 @@
 
 2. Message Attribute : Key-Value 형식 메타데이터로 Body에 포함되지 않는 추가적인 데이터
    - 주로 분류 / 필터링 / Body를 처리하기 위한 Context 등에 활용 (예) Attribute에 영상 처리 알고리즘 명시 / 분류를 위한 Tag 정의 등)
-   - Raw Message Delivery 활성화 시 최대 10개)
+   - Raw Message Delivery 활성화 시 최대 10개
 
 3. TTL (모바일 전용)
 4. 기타 : Timestamp, 토픽 ARN, 시그니처, 구독 해제를 위한 URL 등
