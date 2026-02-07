@@ -66,13 +66,13 @@
 2. API : PutRecord / PutRecords로 데이터 레코드 전달
 3. Amazon Kinesis Producer Library (KPL) : Kinesis에 데이터 레코드를 전달하기 위한 라이브러리
    - Stream에 데이터를 전달하기 위한 다양한 기능 : Retry / 데이터 취합 및 Batch 전달 / CloudWatch 메트릭을 통한 모니터링
-4. Amazon Kinesis Agent : Java 기반 애플리케이션
+4. Amazon Kinesis Agent : JAVA 기반 애플리케이션
 
 -----
 ### Consumer
 -----
 1. KCL (Amazon Kinesis Clienth Library) : Kinesis의 Data Record 읽기를 쉽게 관리하기 위해 만들어진 라이브러리
-   - Java, Python, Ruby, Node.js, .NET 지원
+   - JAVA, Python, Ruby, Node.js, .NET 지원
    - 스트림 연결, 데이터 스트림 변경, 데이터 스트리밍의 로드 밸런싱, 리샤드 등 다양한 상황 및 로직 처리 기능 미리 구현
 2. 직접 데이터를 처리하기도하고, 상황에 따라 다른 주체(S3, Openearch 등)에 전달
 
