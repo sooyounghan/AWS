@@ -193,3 +193,5 @@ StandardLateDeleteTest : : 메세지 1개 설정
 FIFOLateDeleteTest : 메세지 1개 설정
 - 메세지가 지워졌으므로, 에러 발생 (요청도 실패)
 ```
+
+4. 액세스 키 삭
