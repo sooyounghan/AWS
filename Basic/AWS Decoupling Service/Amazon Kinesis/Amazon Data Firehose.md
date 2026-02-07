@@ -50,3 +50,116 @@
 <div align="center">
 <img src="https://github.com/user-attachments/assets/a0e177b5-75e4-4c1f-882a-d8161d865e83" />
 </div>
+
+4. demo-heatmap-backend
+   - IAM - 사용자 - admin - 액세스 키 발급 - 기타 - 생성
+   - 설정 방법
+```
+1. AWS CLI 설치 및 credential configure (aws configure --profile {프로필명})
+2. node 18 이상 설치
+3. yarn 설치 : npm install -g yarn
+4. 프로젝트 디렉토리에서 Dependency 가져오기 : yarn
+5. 배포 : yarn deploy --aws-profile {프로필 명}
+```
+```
+endpoints:                                              
+  GET - https://6rm5orkmwg.execute-api.ap-northeast-2.amazonaws.com/dev/athena
+  GET - https://6rm5orkmwg.execute-api.ap-northeast-2.amazonaws.com/dev/template
+  GET - https://6rm5orkmwg.execute-api.ap-northeast-2.amazonaws.com/dev/athena/cron/partionload
+  GET - https://6rm5orkmwg.execute-api.ap-northeast-2.amazonaws.com/dev/athena/cron/query
+```
+
+5. demo-heatmap-frontend
+```
+설치 방법
+1. node 18 이상 설치
+2. yarn 설치
+3. demo-heatmap-backend 프로비전
+4. .env 파일 업데이트(AWS Access Key Pair 만들고 Backend API 주소 가져와서 업데이트)
+5. yarn / yarn start
+```
+```
+REACT_APP_FIREHOSE_NAME='demo-heatmap-click-firehose-stream'
+REACT_APP_ACCESSKEY_ID='{액세스 키}'
+REACT_APP_SECRET_ACCESS_KEY='{비밀 액세스 키}' (실전에서는 전용 계정 만들기)
+REACT_APP_RECORD_API_ADDRESS='https://6rm5orkmwg.execute-api.ap-northeast-2.amazonaws.com/dev/athena'
+```
+
+6. Click Heatmap 생성 : 클릭하게 되면 S3 로그에 저장
+   - 개발자 도구 Console 확인
+```
+Clicked coordinates: X=100, Y=173
+MainPage.js:62 {$metadata: {…}, Encrypted: false, FailedPutCount: 0, RequestResponses: Array(1)}
+MainPage.js:89 Clicked coordinates: X=114, Y=180
+MainPage.js:62 {$metadata: {…}, Encrypted: false, FailedPutCount: 0, RequestResponses: Array(1)}
+MainPage.js:89 Clicked coordinates: X=135, Y=173
+MainPage.js:62 {$metadata: {…}, Encrypted: false, FailedPutCount: 0, RequestResponses: Array(1)}
+...
+```
+
+   - Amazon Data Firehose - demo-heatmap-click-firehose-stream - 구성 - Amazon S3 대상 - S3 버킷 접두사 : ```year=!{timestamp:YYYY}/month=!{timestamp:MM}/day=!{timestamp:dd}/```
+   - S3 버킷을 통해 확인 : 클릭 한 번 당 하나의 파일이 아닌 Firehose에서 버퍼로 만들어서 저장하다가 일정 기간이 지났거나 용량이 차면 하나의 파일로 생성
+```
+{"type":"click","page":"main","width":856,"height":323,"x":171,"y":145,"timestamp":1770488406990,"datetime":"2026-02-08 03:20:06"}
+{"type":"click","page":"main","width":856,"height":323,"x":171,"y":145,"timestamp":1770488407144,"datetime":"2026-02-08 03:20:07"}
+{"type":"click","page":"main","width":856,"height":323,"x":171,"y":145,"timestamp":1770488407304,"datetime":"2026-02-08 03:20:07"}
+{"type":"click","page":"main","width":856,"height":323,"x":171,"y":145,"timestamp":1770488407450,"datetime":"2026-02-08 03:20:07"}
+{"type":"click","page":"main","width":856,"height":323,"x":179,"y":172,"timestamp":1770488407748,"datetime":"2026-02-08 03:20:07"}
+{"type":"click","page":"main","width":856,"height":323,"x":179,"y":172,"timestamp":1770488407881,"datetime":"2026-02-08 03:20:07"}
+{"type":"click","page":"main","width":856,"height":323,"x":179,"y":172,"timestamp":1770488408026,"datetime":"2026-02-08 03:20:08"}
+{"type":"click","page":"main","width":856,"height":323,"x":182,"y":172,"timestamp":1770488408176,"datetime":"2026-02-08 03:20:08"}
+{"type":"click","page":"main","width":856,"height":323,"x":188,"y":174,"timestamp":1770488408305,"datetime":"2026-02-08 03:20:08"}
+{"type":"click","page":"main","width":856,"height":323,"x":237,"y":212,"timestamp":1770488408448,"datetime":"2026-02-08 03:20:08"}
+{"type":"click","page":"main","width":856,"height":323,"x":266,"y":226,"timestamp":1770488408595,"datetime":"2026-02-08 03:20:08"}
+{"type":"click","page":"main","width":856,"height":323,"x":268,"y":226,"timestamp":1770488408746,"datetime":"2026-02-08 03:20:08"}
+{"type":"click","page":"main","width":856,"height":323,"x":282,"y":234,"timestamp":1770488408900,"datetime":"2026-02-08 03:20:08"}
+{"type":"click","page":"main","width":856,"height":323,"x":299,"y":194,"timestamp":1770488409102,"datetime":"2026-02-08 03:20:09"}
+{"type":"click","page":"main","width":856,"height":323,"x":297,"y":191,"timestamp":1770488409270,"datetime":"2026-02-08 03:20:09"}
+{"type":"click","page":"main","width":856,"height":323,"x":294,"y":187,"timestamp":1770488409429,"datetime":"2026-02-08 03:20:09"}
+```
+   - 버퍼 힌트 : 버퍼 크기 (50MiB) 또는 버퍼 간격 (60초) 해당되면 생성
+
+7. 활용
+   - AWS Glue - Crawlers - demo-heatmap-click-crawler Run crawler
+   - AWS Databases - Tables - 생성된 Log - Schema
+   - 쿼리 실행 : test_config.yml (demo-heatmap-backend)
+```yml
+aws_profile: {프로필명}
+app: backend
+region: ap-northeast-2
+useAWSSDKV3: true
+env:
+  account_id: {account_id}
+  logbucket_name: demo-heatmap-clicklog
+  service: demo-heatmap
+  resultbucket_name: demo-heatmap-athena-result
+  stage: dev
+claimsProfiles:
+
+test_targets:
+
+  - uri: athena/cron/partionload.js
+    eventType: http
+    description: partition load
+    method: get
+    parms:
+      page: main
+    expect:
+      checkType: check_200
+
+  - uri: athena/cron/query.js
+    eventType: http
+    description: query
+    method: get
+    parms:
+      page: main
+    expect:
+      checkType: check_200
+```
+   - Debug : Debug Jest Tests
+   - Click Heatmap 웹 화면의 오른쪽 heatmap 클릭 후 확인
+   - 다른 곳 클릭 후, 60초 이후 다시 Debug Jest Tests
+
+8. 리소스 정리
+   - 액세스 키 삭제
+   - CloudFormation - demo-heatmap-dev-1-serverless 삭제
