@@ -61,3 +61,7 @@
      + CloudWatch 경보가 변경되었을 경우, Route 53 Health Check 수동으로 업데이트 필요
 
    - 데이터가 충분하지 않을 경우 (Insufficient Data 상태) 상태 지정 가능 (예) Insufficient Data일 때, Healthy, Unhealthy, Last Known Status)
+
+9. Demo - 리소스 Health Check 모니터링
+   - EC2 인스턴스를 프로비전하고, Route 53 Health Check 구성 : EC2를 두 개 만들어 Health Check를 구성하고, 이 두 Health Check를 모아서 모니터링하는 Check 생성
+   - Health Check Fail 시, SNS를 통해 이메일 받아보기 
