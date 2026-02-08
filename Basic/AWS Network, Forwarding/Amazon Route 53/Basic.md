@@ -19,7 +19,7 @@
    - AAAA (IPv6 Address) Record : 도메인을 IPv6 주소와 연결
    - CNAME (Canonical Name) Record : 도메인을 다른 도메인과 연결
      + 예) ```www.example.com``` → ```example.com```
-     + 규칙적으로 APEX 도메인은 CNAME 사용 불가
+     + 💡 규칙으로 APEX 도메인은 CNAME 사용 불가
    - 💡 Alias (별칭) Record : AWS Rotue53에서만 지원하는 레코드 타입으로 도메인과 AWS 리소스 연결
      + 예) 도메인을 S3 / CloudFront / ALB 등과 연결
      + HTTPS Record : HTTPS를 지원하는 리소스를 위해 더 많은 정보를 제공해 더 효율적인 연결 지원
