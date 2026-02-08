@@ -54,7 +54,7 @@
 8. 모니터링 대상 - CloudWatch 경보
    - CloudWatch 경보 상태를 모니터링
    - 주의
-     + CloudWatch 경보의 경보 상태가 아닌 직접 데이터를 모니터링 : 즉, CloudWatch 경보보다 조금 더 민감하게 반응
+     + 💡 CloudWatch 경보의 경보 상태가 아닌 직접 데이터를 모니터링 : 즉, CloudWatch 경보보다 조금 더 민감하게 반응
      + Standard Resolution (60초마다 수집) 경보만 모니터링 가능
      + Average, Minimum, Sum, SampleCount만 모니터링 가능
      + Math Metric 사용 불가능
@@ -64,4 +64,35 @@
 
 9. Demo - 리소스 Health Check 모니터링
    - EC2 인스턴스를 프로비전하고, Route 53 Health Check 구성 : EC2를 두 개 만들어 Health Check를 구성하고, 이 두 Health Check를 모아서 모니터링하는 Check 생성
+     + demo-my-route53-healthcheck-1, 2 / 키 페어 필요 없음 / 보안 그룹 : default / Userdata / 인스턴스 개수 2개
+```
+#!/bin/bash
+sudo -s
+dnf install httpd -y
+service httpd start
+chkconfig httpd on
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+echo "hello,awsclassroom" >> /var/www/html/index.html
+```
+   - Route53 - 상태 검사 - 상태 확인 생성 - demo-my-ec2-health-check-1, 2 / 리소스 : 엔드포인트
+     + 엔드포인트 지정 기준 : 도메인 이름
+     + 프로토콜 : HTTP / 도메인 이름 : EC2 DNS 주소 / 경로 : /index.html
+     + 고급 구성
+       * 요청 간격 : 빠름 (10초)
+       * 실패 임계값 : 1
+       * 문자열 매칭 : awsclassroom
+       * 지연 시간 그래프 활성화
+       * 상태 검사기 리전
+       * 상태 검사 실패 시 알림 메세지 받음 : 알림 보내기 대상 - 새로운 SNS 주제 / 주제 이름 : my-route53-health-check-email / 수신자 이메일 주소 입력
+
+   - Route53 - 상태 검사 - 상태 확인 생성 - demo-my-ec2-health-check-all / 엔드 포인트 대상 : 계산된 상태 확인 / 모니터링 대상 상태 확인 : 위 2개 선택 / 정상으로 보고 조건 : 전체 상태 확인이 정상 / 경보 생성 : 예 / 알림 보내기 생성 : 기존 SNS 주체
+
+   - 이메일 확인 후, Confirm Subscription
+     + 모니터링 / 상태 검사기 확인 가능
+     + 로그 확인 : EC2 접속 / sudo -s / tail -f /var/log/httpd/access_log
    - Health Check Fail 시, SNS를 통해 이메일 받아보기 
+     + Health Check Fail : String 매칭 취소 (EC2 : nano /var/www/html/index.html - hello, 로 변경 후 저장)
+     + Health Check Fail 발생 : String이 매치되지 않아 발생
+     + 일정 % 이하로 떨어지면, 이메일 발송
+    
+   - 리소스 정리 : EC2 인스턴스 종료 ./ 상태 검사 삭제 (all, 1, 2) 
