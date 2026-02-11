@@ -55,3 +55,18 @@
 2. 파일 다운로드 / 업로드 지원
 3. 리전 당 최대 동시에 10개까지의 세션 동시 사용 가능
 4. 공식적으로 지원하는 브라우저 : 크롬 / 파이어폭스 / Edge / Safari
+
+-----
+### Demo
+-----
+1. CloudShell - 작업 - 새 탭 / 행, 열로 분할
+2. 톱니바퀴 - UI 변경 가
+3. pwsh : PowerShell 전환 / bash : Bash로 전환
+4. aws s3 ls : Admin 권한이므로 S3 버킷 목록 확인 가능
+5. S3 버킷 내 이미지 다운로드 예 : ```aws s3api get-object --bucket {버킷명} --key images/zSN42WxK_400x400.jpg 
+zSN42WxK_400x400.jpg```
+6. 다운로드 가능 : zSN42WxK_400x400.jpg
+7. 업로드 가능 : 업로드 후, dir
+8. 설치 목록 확인 : ll /usr/local/bin
+9. 리셋 가능 : 작업 - 다시 시작
+10. 영구 스토리지 삭제 : 작업 - 삭제
