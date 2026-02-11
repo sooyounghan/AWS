@@ -72,7 +72,7 @@
      + Default TTL : 별도의 설정이 없을 경우 부여되는 기본 TTL
 
 6. Cache TTL 컨트롤
-   - 파일 단위에서는 Origin에서 Cache-Contorl 헤더 혹은 Expires 헤더를 포함해서 조절 가능
+   - 파일 단위에서는 Origin에서 Cache-Control 헤더 혹은 Expires 헤더를 포함해서 조절 가능
    - Cache-Control : 얼마나 오래 Object를 Cache 하는지 기간 설정
      + max-age : CloudFront와 브라우저 둘 다 영향
      + s-maxage : CloudFront만 영향
