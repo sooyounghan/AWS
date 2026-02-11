@@ -24,7 +24,7 @@
      
 2. Private Subnet에 EC2 생성
    - EC2 생성 : demo-private-ec2 / 키 페어 : demo-my-private-keypair / 네트워크 정보 : demo-cloudshell, 보안 그룹 : 기존 보안 그룹 (default)
-   - 보안그룹 : VPC 보안 그룹 - 인바운드 규칙 편집 - 기존 삭세 후, 모든 트래픽, 모든 소스 추
+   - 보안그룹 : VPC 보안 그룹 - 인바운드 규칙 편집 - 기존 삭세 후, 모든 트래픽, 모든 소스 추가
      
 3. CloudShell VPC 모드로 EC2 접근
    - 왼쪽 하단 CloudShell 선택
@@ -49,4 +49,4 @@ ssh -i "my_keypair.pem" ec2-user@{EC2 Private IP DNS}
      + VPC - 라우팅 테이블 - demo-cloudshell-rtb-private1-ap-northeast-2a - 라우팅 - 라우팅 편집 - 모든 트래픽(```0.0.0.0/0```) / 대상 : NAT 게이트웨이 (my-nat-gateway)
      + CloudShell에서 EC2 접속후 ```ping 0.0.0.0```으로 인터넷 접속 확인
 
-4. 리소스 정리 : EC2 정리 / NAT 게이트웨이 삭제 / EC2 탄력적 IP 주소 릴리
+4. 리소스 정리 : EC2 정리 / NAT 게이트웨이 삭제 / EC2 탄력적 IP 주소 릴리즈
