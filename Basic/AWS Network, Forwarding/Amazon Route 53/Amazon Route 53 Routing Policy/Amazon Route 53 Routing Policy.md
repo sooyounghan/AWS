@@ -62,7 +62,7 @@
 2. 추가적으로 Bias를 지정해 지역 범위 조절 가능 (Bias : 특정 지역이 더 많은 범위 혹은 더 적은 범위를 커버하도록 조절하는 보정값)
 3. 주요 사용 사례
    - 지역별 컨텐츠 제공 구분
-   - 최소 지연 속도로 라우탕
+   - 최소 지연 속도로 라우팅
 <div align="center">
 <img src="https://github.com/user-attachments/assets/1009b2fc-96b5-47a8-9d73-c15eedb88ea9" />
 </div>
