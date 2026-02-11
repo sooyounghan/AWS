@@ -60,11 +60,10 @@
 ### Demo
 -----
 1. CloudShell - 작업 - 새 탭 / 행, 열로 분할
-2. 톱니바퀴 - UI 변경 가
+2. 톱니바퀴 - UI 변경 가능
 3. pwsh : PowerShell 전환 / bash : Bash로 전환
 4. aws s3 ls : Admin 권한이므로 S3 버킷 목록 확인 가능
-5. S3 버킷 내 이미지 다운로드 예 : ```aws s3api get-object --bucket {버킷명} --key images/zSN42WxK_400x400.jpg 
-zSN42WxK_400x400.jpg```
+5. S3 버킷 내 이미지 다운로드 예 : ```aws s3api get-object --bucket {버킷명} --key images/zSN42WxK_400x400.jpg zSN42WxK_400x400.jpg```
 6. 다운로드 가능 : zSN42WxK_400x400.jpg
 7. 업로드 가능 : 업로드 후, dir
 8. 설치 목록 확인 : ll /usr/local/bin
