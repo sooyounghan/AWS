@@ -46,7 +46,7 @@
        * CloudFront에서 별도로 User-Agent를 기반으로 전용 헤더 생성
        * CloudFront-Is-Desktop-Viewer / CloudFront-Is-Mobile-Viewer / CloudFront-Is-SmartTV-Viewer 등
 
-   - 지역별 캐싱 : CloudFront에서 전용 헤더 생성 : CloudFront-Viewer-Country
+   - 지역별 캐싱 : CloudFront에서 전용 헤더 생성 (CloudFront-Viewer-Country)
    - 헤더 명은 대소문자를 구분하지 않지만, 값은 구분
 
 4. Cookie based Cache
@@ -64,7 +64,7 @@
    - TTL (Time To Live) : Cache Object를 얼마나 오래 보관할지에 관한 설정
      + 기본 24시간
      + 모든 CloudFront의 Object에 적용
-     + 파일 단위에서는 Origin에서 Cache-Contorl 헤더 혹은 Express 헤더를 포함해서 조절 가능
+     + 파일 단위에서는 Origin에서 Cache-Control 헤더 혹은 Express 헤더를 포함해서 조절 가능
 
    - TTL 종류
      + Miminum TTL : 최소 TTL, 즉, 파일 단위 컨트롤에서 줄 수 있는 최소 TTL
