@@ -32,3 +32,7 @@
    - Edge Location(Points of Presence (또는 POP) : 데이터를 가장 빠른 속도로 제공(캐싱)하기 위한 거점
    - Regional Edge Cache : Edge Location의 상위 단위로 좀 더 큰 캐싱 거점
    
+7. 주요 비용
+   - 데이터 송신 / 수신
+   - 엣지 컴퓨팅
+   - 추가 기능
