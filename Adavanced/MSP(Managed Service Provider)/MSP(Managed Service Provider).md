@@ -27,6 +27,10 @@
 5. 집중하는 분야가 따로 존재 (예) 엔터프라이즈 vs 스타트업)
 6. 기타 여러가지 혜택 : 파트너사 행사 / 이벤트 지원
 7. 규모의 경제
+<div align="center">
+<img src="https://github.com/user-attachments/assets/ac885be1-23b1-4504-aab2-54be449eda7e" />
+<img src="https://github.com/user-attachments/assets/fa21b04d-3d61-4813-9b97-dd685cc77085" />
+</div>
 
 -----
 ### AWS의 MSP 평가 / 관리
