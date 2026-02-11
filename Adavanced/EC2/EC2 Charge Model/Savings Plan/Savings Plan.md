@@ -8,3 +8,10 @@
    - Compute Savings Plans
    - EC2 Instance Savings Plans
    - SageMaker Savings Plans
+
+3. 사용량 혹은 인스턴스 패밀리를 약정해서 할인 받는 요금 모델
+   - RI에 비해 유연함 : Compute Savings Plan의 경우, 리전 / 패밀리 / OS / 테넌시 등에 관계 없이 할인
+   - 인스턴스 예약 불가능
+   - 판매 불가능
+   - 약간 덜 관리하고 덜 할인 받는 모델
+   - 설정해두면 여러 혜택을 자동으로 분배하지만, 세세한 컨트롤 불가능
