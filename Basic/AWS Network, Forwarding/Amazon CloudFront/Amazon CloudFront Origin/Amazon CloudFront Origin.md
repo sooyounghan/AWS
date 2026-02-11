@@ -15,7 +15,7 @@
 
 2. S3 Origin
    - Amazon S3을 Origin으로 설정해 콘텐츠를 제공하는 경우
-   - 도메인 형식 : ```{bucketname}.s3.{region}.amazonaws.com```
+   - 💡 도메인 형식 : ```{bucketname}.s3.{region}.amazonaws.com```
      + 이렇게 설정하지 않을 경우 : Custom Origin 취급
        * ```s3.amazonaws.com/{bucketname}``` (X)
        * ```http://{bucketname}.s3-website-{region}.amazonaws.com``` (가능, 단 S3 Static Hosting)
@@ -39,7 +39,7 @@
      + 예) Primary에서 HTTP Status 500을 반환할 경우, Secondary에서 콘텐츠 가져오기
 
    - HTTP / HTTPS로 접근할지 선택 가능
-   - IP 주소는 사용 불가 : 도메인만 가능
+   - 💡 IP 주소는 사용 불가 : 도메인만 가능
 
 4. Origin Group
    - Failover를 대비하여 Primary, Secondary 두 Origin 그룹으로 묶어 관리 가능
@@ -63,4 +63,5 @@
 <div align="center">
 <img src="https://github.com/user-attachments/assets/527c4c37-3137-4385-9cc7-316ea8446ee9" />
 </div>
+
 
