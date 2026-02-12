@@ -84,7 +84,7 @@ yarn deploy --aws-profile [자신의 프로파일명 = cf-test]
 
 11. S3 버킷(demo-cf-presigned-url-dev-1)에 aws_classroom_square.png 업로드
 12. CloudFront Domain/aws_classroom_square.png : 접속 불가 (인증 필요)
-13. 프로비전했던 URL 사용 : 프로비전했던 URL?path=aws_classroom_square.png&expire_in=300 (300초 동안 유효)
+13. 프로비전했던 URL 사용 (path와 expire_in 파라미터 필요) : 프로비전했던 URL?path=aws_classroom_square.png&expire_in=300 (300초 동안 유효)
     - URL 출력 : 해당 URL로 접근하면 해당 내용 출력 (즉, Presinged URL을 활용해 CloudFront Distribution에 접근해 이미지를 가져옴)
     - 일반적인 경로로 접근 불가함
 
