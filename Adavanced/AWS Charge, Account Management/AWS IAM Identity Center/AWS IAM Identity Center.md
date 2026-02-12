@@ -73,9 +73,38 @@
 ### 구성 순서
 -----
 1. AWS Identity Center 활성화 (Organizations 관리 어카운트만 가능)
+   - Organization 구성 (Root 예하 dev, production 존재 / dev 예하 aws-lecture-qa, aws-lecture-sandbox, production 예하 aws-lecture-production)
+   - IAM Identitiy Center 활성화 - 리전 확인 후 활성화
+      
 2. Custom URL 설정
+   - 로그인을 위한 AWS Access Portal URL 편집 : 인스턴스 이름 편집 (aws-lecture) 후, awslecture (이름은 마음대로)
+
 3. 사용자 생성 (이메일 확인 필요)
 4. 연동할 그룹 / 사용자 생성
+   - IAM Identitiy Center - 그룹 - 그룹 생성 - admin / billing 그룹 생성
+   - 사용자 - 사용자 추가 - spark 및 이메일 주소 입력 - 그룹에 사용자 추가 (admin / billing)
+
 5. 부여할 권한 세트 생성
+   - IAM Identitiy Center - 권한 세트 - 권한 세트 생성 - admin - 사전 정의된 권한 세트 - AdministratorAccess - 세션 기간 : 12시간
+   - Billing 권한 - 사전 정의된 권한 세트 - Billing - 세션 기간 : 12시간
+
 6. AWS 계정과 연결
+   - IAM Identitiy Center - AWS 계정 - dev 예하 aws-lecture-qa, aws-lecture-sandbox, production 예하 aws-lecture-production 모두 선택 후 사용자 또는 그룹 할당
+    - admin 그룹 - 다음 - AdministratorAccess 권한 세트 - 제출 (4개의 계정에 추가)
+    - billing 그룹 - 다음 - Billing - 제출
+    - 이메일 확인 : Accept Invitation 
 7. 사용자 로그인
+    - 암호는 사용하는 암호 입력 후, 로그인
+    - MFA 디바이스 등록 (Admin 권한 경우) 후 입력
+      + 사용하고 싶지 않다면, 설정 - 인증 - 멀티 팩터 인증 구성에서 설정 가능
+    - 로그인하면, 각 계정에 대한 세트 확인 가능
+    - 각 권한으로 클릭하면 해당 권한을 가진 계정으로 접속 가능
+
+8. aws-lecture-sandbox에 개발자 권한 부여
+   - IAM Identitiy Center - 그룹 - team-dev
+   - 사용자 - spark-dev / 이메일 주소 입력 / 그룹 : team-dev 선택
+   - 권한 세트 - 사용자 지정 권한 세트 - AmazonEC2FullAccess / 권한세트 이름 : Dev-EC2FullAccess
+   - AWS 계정 - aws-lecture-sandbox 계정 - 사용자 또는 그룹 할당 -  team-dev - 권한 - Dev-EC2FullAccess - 제출
+   - 이메일 확인 후 수락 후 유저 생성 후 로그인
+   - 액세스 키를 누르면, 사용할 수 있는 액세스 키, 시크릿 액세스 키, 세션 토큰 활용가능 (콘솔 로그인 뿐만 아니라 프로그래밍 방식으로도 가능)
+   
