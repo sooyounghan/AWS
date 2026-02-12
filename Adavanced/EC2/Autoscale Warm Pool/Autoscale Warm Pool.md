@@ -54,7 +54,9 @@
      + EC2_INSTANCE_LAUNCHING : Warm Pool 진입 시 / 실제 Live로 올라갈 때 2번 실행
      + EC2_INSTANCE_TERMINATING : 종료되거나 Warm Pool로 돌아갈 때 실행
    - 💡 Lifecycle Hook이 없다면, Warm Pool 진입 후 Userdata 수행 중 Stop / Hiberate 될 수 있음
-![Uploading image.png…]()
+<div align="center">
+<img src="https://github.com/user-attachments/assets/3d138743-9bfb-4f3b-8627-2c62fea9da4a" />
+</div>
 
 8. Demo
    - EC2 IAM 역할 생성 (Lifecycle Hook 종료 권한)
