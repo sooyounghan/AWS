@@ -60,6 +60,100 @@
 
 8. Demo
    - EC2 IAM 역할 생성 (Lifecycle Hook 종료 권한)
+     + IAM - 역할 - 역할 생성 - EC2 - 역할 이름 : ec2-role-for-warmpool - 역할 생성
+     + ec2-role-for-warmpool - 권한 추가 - 인라인 정책 생성 - JSON - 정책이름 : demo-allow
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "editor",
+            "Effect": "Allow",
+            "Action": "autoscaling:CompleteLifecycleAction",
+            "Resource": "*"
+        }
+    ]
+}
+```
    - Launch Template 생성 : 일부로 2분 이상 긴 시간이 걸리는 Userdata로 초기화
+     + EC2 - 시작 템플릿 - 시작 템플릿 - demo-my-warmpool-template - 인스턴스 : t2.micro / 키 페어 없이 진행 / 보안그룹 : default / IAM 인스턴스 프로파일 : ec2-role-for-warmpool / 유저 데이터 추가
+```
+Content-Type: multipart/mixed; boundary="//"
+MIME-Version: 1.0
+ 
+--//
+Content-Type: text/cloud-config; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="cloud-config.txt"
+ 
+#cloud-config
+cloud_final_modules:
+- [scripts-user, always]
+--//
+Content-Type: text/x-shellscript; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="userdata.txt"
+ 
+#!/bin/bash
+echo "Starting EC2 user data script..."
+# Check if httpd is installed
+if ! dnf list installed httpd &> /dev/null; then
+  echo "httpd is not installed. Installing httpd..."
+  dnf install httpd -y
+else
+  echo "httpd is already installed."
+fi
+# Check if httpd service is available and start it
+if ! systemctl status httpd &> /dev/null; then
+  echo "httpd service is not available. Waiting for 120 seconds..."
+  sleep 120
+fi
+# Start the httpd service
+echo "Starting httpd service..."
+service httpd start
+# Enable httpd service to start on boot
+echo "Enabling httpd to start on boot..."
+chkconfig httpd on
+# Fetch instance metadata token and instance ID
+echo "Fetching instance metadata..."
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+# Add the instance ID to the default web page
+echo "Writing instance ID ($INSTANCE_ID) to /var/www/html/index.html..."
+echo "$INSTANCE_ID" >> /var/www/html/index.html
+# Notify Auto Scaling Group that lifecycle hook is complete
+echo "Notifying Auto Scaling Group that instance initialization is complete..."
+# Replace <LIFECYCLE-HOOK-NAME> and <AUTO-SCALING-GROUP-NAME> with the actual names
+LIFECYCLE_HOOK_NAME="on-instance-start"
+AUTO_SCALING_GROUP_NAME="demo-asg-warmpool"
+# Fetch lifecycle action token from the instance metadata
+aws autoscaling complete-lifecycle-action \
+  --lifecycle-hook-name "$LIFECYCLE_HOOK_NAME" \
+  --auto-scaling-group-name "$AUTO_SCALING_GROUP_NAME" \
+  --lifecycle-action-result "CONTINUE" \
+  --instance-id "$INSTANCE_ID"
+echo "Lifecycle hook notification sent. EC2 user data script completed."
+--//--
+```
+
    - Autoscale Group 생성 / Warm Pool 생성
+     + Autoscale 그룹 : demo-asg-warmpool / 시작 템플릿 : demo-my-warmpool-template / 가용 영역은 모두 선택 / 원하는 용량 0 / 최소 0, 최대 2 / 태그 : Name - Warmpool
+     + 인스턴스 관리 - 수명 주기 후크 - 수명 주기 후크 생성 - on-instance-start / 하트비트 제한 시간 : 300초
+      
    - Autoscale의 Scale-Out을 요청해서 인스턴스 준비 확인
+     + Autoscale Group : demo-asg-warmpool - 편집 - 원하는 용량 : 1 - 업데이트
+     + demo-asg-warmpool 웜풀 인스턴스 생성 - 웜풀 생성 - 웜풀 인스턴스 상테 : 중지됨 - 생성
+     + EC2 인스턴스 2개 생성 (1개 : Autoscaling Group / 1개 : Warm Pool 초기화 시키기 위해 실행, 120초 이후 중지)
+     + Autoscaling Group EC2 연결
+```
+sudo -s
+cd /var/log
+nano cloud-init-output.log (120초 대기)
+```
+
+   - Autoscaling Group에서 demo-asg-warmpool - 편집 - 원하는 용량 2개로 업데이트 (바로 실행됨을 알 수 있음) : 접속하면 바로 접속됨을 알 수 있음
+   - 원하는 용량을 1로 감소 : 1개는 Warm Pool로 들어감 (Pending -> Stopped)
+   - 리소스 정리 : Autoscaling Group 삭제
