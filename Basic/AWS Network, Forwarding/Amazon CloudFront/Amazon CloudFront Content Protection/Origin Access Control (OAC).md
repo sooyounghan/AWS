@@ -6,7 +6,9 @@
    - 즉, S3에서 해당 OAC 접근을 허용하고 CloudFront에서 OAC를 활용해서 S3와 소통
    - S3에서 기본적으로 모든 접근을 차단하고 OAC의 접근만 허용
 3. OAC는 Lambda Function URL에도 사용 가능
-<img width="528" height="274" alt="image" src="https://github.com/user-attachments/assets/146ed5da-5bf0-493d-8afc-7d4f14d97757" />
+<div align="center">
+<img src="https://github.com/user-attachments/assets/146ed5da-5bf0-493d-8afc-7d4f14d97757" />
+</div>
 
 4. 세 가지 Sign 방법 : CloudFront가 S3와 소통하기 위한 요청에 Sign 방법을 정의 가능
    - Sign Requests : CloudFront IAM Principle이 S3에 요청할 때 SigV4로 Sign
