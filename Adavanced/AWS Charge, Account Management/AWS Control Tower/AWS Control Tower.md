@@ -56,7 +56,14 @@
    - Demo의 경우 30분 이내 완료
    - 참고 : 삭제 후에도 Organizations은 남아있음
 
-3. Control Tower - 서울 리전 확인 - 랜딩 존 설정 - 홈 리전 : 서울 리전 - 거버넌스를 위한 추가 리전 선택 : 아시아 (도쿄) 리전 선택 / 리전 거부 설정 : 활성화되지 않음 / 기본 OU, 추가 OU 유지 / 로그 아카이브 계정, 감사 계정 이메일 입력 / AWS 계정 액세스 구성 : IAM Identity Center 사용 / AWS CloudTrail 구성 활성화됨 / S3에 대한 로그 구성 / 랜딩 존 생성
+3. Control Tower - 서울 리전 확인 - 랜딩 존 설정
+   - 홈 리전 : 서울 리전 - 거버넌스를 위한 추가 리전 선택 : 아시아 (도쿄) 리전 선택
+   - 리전 거부 설정 : 활성화되지 않음
+   - 기본 OU, 추가 OU 유지
+   - 로그 아카이브 계정, 감사 계정 이메일 입력
+   - AWS 계정 액세스 구성 : IAM Identity Center 사용
+   - AWS CloudTrail 구성 활성화됨
+   - S3에 대한 로그 구성
 
 4. 조직 단위 (OU) : Root / Sandbox / Security와 계정 : Log Archive, Audit 생성
 5. 예방 제어 (Guardrail)
