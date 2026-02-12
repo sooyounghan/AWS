@@ -32,5 +32,7 @@ echo "$INSTANCE_ID" >> /var/www/html/index.html
 2. CloudFront Distribution 생성 
 3. 보안그룹 설정을 통한 Origin 보호
    - demo-ec2-origin / Origin Type : Other / Origin : EC2 Public DNS 입력 / 프로토콜 : HTTP만 / 보안 보호 비활성화
-
+   - EC2 DNS로 접근 불가
+   - 해당 CloudFront Distribution DNS로 접속 가능
+     
 4. EC2 정리 및 CloudFront Distribution 비활성화
