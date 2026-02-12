@@ -22,12 +22,12 @@
 
    - Real Time Log : 약 초단위의 지연시간으로 요청을 실시간으로 로깅
    - Amazon CloudFront Access Log Standard Log
-     + S3 버킷을 지정해서 모든 유저의 요청을 로깅
-     + Distribution 단위로 요청받은 Edge Location에서 지속적으로 Log 파일을 만들어 S3 버킷으로 Flush
-     + 시간 단위로 여러 번 Flush
-       * 최대 24시간 지연 가능
-       * 심지어 아예 전송되지 않고 누락될 수 있음
-       * 헤더와 쿠키의 크기가 20KB가 넘거나 URL이 8192 Bytes가 넘어갈 경우 CloudFront에서 요청을 별도로 Parse하지 않고 처리 (즉, 이 경우에는 로깅이 되지 않음, Body는 문제 없음)
+   - S3 버킷을 지정해서 모든 유저의 요청을 로깅
+   - Distribution 단위로 요청받은 Edge Location에서 지속적으로 Log 파일을 만들어 S3 버킷으로 Flush
+   - 시간 단위로 여러 번 Flush
+     + 최대 24시간 지연 가능
+     + 심지어 아예 전송되지 않고 누락될 수 있음
+     + 헤더와 쿠키의 크기가 20KB가 넘거나 URL이 8192 Bytes가 넘어갈 경우 CloudFront에서 요청을 별도로 Parse하지 않고 처리 (즉, 이 경우에는 로깅이 되지 않음, Body는 문제 없음)
 
 3. Amazon CloudFront Access Log Real Time Log
    - CloudFront의 요청 로그를 실시간으로 처리할 수 있는 기능
