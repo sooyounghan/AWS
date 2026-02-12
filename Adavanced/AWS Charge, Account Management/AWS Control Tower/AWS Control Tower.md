@@ -65,7 +65,7 @@
    - AWS CloudTrail 구성 활성화됨
    - S3에 대한 로그 구성
 
-4. 조직 단위 (OU) : Root / Sandbox / Security와 계정 : Log Archive, Audit 생성
+4. 조직 단위 (OU) (Root / Sandbox / Security)와 계정 (Log Archive, Audit) 생성
 5. 예방 제어 (Guardrail)
 6. 랜딩 존 설정 / 게정 팩토리 - Control Tower를 사용하여 여러 계정 생성 자동화 (Organization 보다 많은 옵션 지정 가능)
 7. 컨트롤 타워 정리 - 서비스 해제 (랜딩 존 설정 - 서비스 해제 - 랜딩 존 서비스 해제)
