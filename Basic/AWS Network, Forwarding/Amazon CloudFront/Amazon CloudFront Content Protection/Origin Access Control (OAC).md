@@ -11,7 +11,7 @@
 </div>
 
 4. 세 가지 Sign 방법 : CloudFront가 S3와 소통하기 위한 요청에 Sign 방법을 정의 가능
-   - Sign Requests : CloudFront IAM Principle이 S3에 요청할 때 SigV4로 Sign
+   - Sign Requests : CloudFront IAM Principle이 S3에 요청할 때 SigV4 (Signature V4)로 Sign
      + 즉, 요청에 자격증명을 활용해 필요한 정보로 Authorization Header를 구성하고, S3에서 해당 내용을 검증해서 자격이 있는지 요청인지 확인 후 요청 처리 또는 거부
      + 클라이언트가 Sign한 헤더가 있다면 덮어씌움
 
@@ -21,6 +21,17 @@
 -----
 ### Demo -CloudFront OAC 설정
 -----
-1. 버킷 생성
-2. CloudFront Distribution 생성 (OAC 설정)
+1. 버킷 생성 : demo-cf-oac-bucket-{계정ID} 
+    - flower.jpg 업로드
+    - 원본 : S3 버킷 이름
+    - 원본 도메인 존재
+    - 편집 - 원본 액세스 제어 설정 (권장) / OAC 생성 및 설정 가능
+    - 권한 - 설정을 하지 않더라도, CloudFront가 권한 설정 (OAC 생성 및 설정 가능)
 
+2. CloudFront Distribution 생성 (OAC 설정)
+    - 배포 생성 : demo-oac-test
+    - Origin Type : Amazon S3 / 버킷명 조회 / Grant CloudFront access tot Origin (OAC) 설정
+    - 보안 보호 비활성화
+    - 배포 DNS 복사 후, 웹에 입력 후 전송하면 정상 그림 출력
+      + 버킷 권한 삭제 후 캐싱 무효화 한 뒤, 다시 요청하면 Access Denied 발생 (버킷 정책이 없으므로)
+      
