@@ -82,3 +82,45 @@
 <img src="https://github.com/user-attachments/assets/3b8b2a9e-9481-4738-b0b7-6a02e0ec5b73" />
 </div>
 
+-----
+### 임시자격증명 검증 과정
+-----
+1. 임시자격증명은 권한 검증 시 원본 역할을 검증
+2. 작업을 위해 권한이 사용되는 시점에 원본 역할이 존재하고 해당 작업에 대한 권한이 있어야 통과
+3. 즉, 임시자격증명을 만들고 기존 역할을 지우거나 권한을 제거할 경우 Access Denied
+<img width="708" height="356" alt="image" src="https://github.com/user-attachments/assets/b9abf962-9514-44c7-9507-3cd9c644b7f4" />
+
+-----
+### 임시자격증명의 유효기간
+-----
+1. AssumeRole API에서 DurationSeconds 파라미터로 유효기간 설정 가능 : 기본 한 시간
+2. 제약
+   - Assume 할 IAM 역할(Role)에서 최대 유효기간 설정 가능 (1시간 ~ 12시간)
+     + 콘솔 역할 전환 시 지정한 최대 시간 적용
+     + SDK / CLI의 경우 지정한 범위 내에서만 적용
+   - 💡 Assume 하는 주체가 임시자격증명인 경우(Role Chaining) 무조건 최대 유효기간은 1시간
+     + 예) Lambda의 Execution Role로 다시 만든 임시자격증명은 무조건 1시간만 유효
+     + EC2의 역할 부여에서는 예외
+<div align="center">
+<img src="https://github.com/user-attachments/assets/a714bcdd-110c-4090-9811-c813b352260b" />
+<img src="https://github.com/user-attachments/assets/dbd0106c-e357-44f4-974c-5380ce074886" />
+</div>
+
+-----
+### 임시자격증명의 취소
+-----
+1. 임시자격증명이 유출 등의 이유로 취소가 필요한 경우 원본 IAM 역할에서 취소 가능
+2. 내부적으로 취소 시간 이전의 모든 요청에 대해 Deny 처리하는 Policy 추가
+<div align="center">
+<img src="https://github.com/user-attachments/assets/edc34075-8649-401e-be8e-23a6b02e31e9" /></div>
+
+
+-----
+### Demo - 임시자격증명 실험
+-----
+1. IAM 사용자, IAM 역할, EC2 역할 생성
+
+2. IAM 역할 AssumeRole 테스트
+   - 임시자격증명 테스트
+   - 유효기간 테스트
+   - 권한 체크 과정 테스트
