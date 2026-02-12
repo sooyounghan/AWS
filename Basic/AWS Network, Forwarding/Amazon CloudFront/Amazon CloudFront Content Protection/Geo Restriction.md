@@ -2,7 +2,7 @@
 ### 지리적 배포 제한 (Geo Restriction)
 -----
 1. CloudFront 지리 배포 제한
-   - Whitelist 혹은 Blacklist : 나라별 기준
+   - Whitelist(허용 나라 목록) 혹은 Blacklist(차단 나라 목록) : 나라별 기준
    - 모든 배포(Distribution)에 제한 사항 포함 (즉, 일부만 제한 걸기 불가능)
    - IP 주소의 정확도는 99.8%
 <div align="center">
