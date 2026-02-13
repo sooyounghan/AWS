@@ -45,6 +45,9 @@
      + 권한 범위 (Permissions Boundaries) : AWS의 사용자나 역할의 권한을 제한하기 위한 정책
 <div align="center">
 <img width="263" height="243" alt="image" src="https://github.com/user-attachments/assets/4edbe74f-d5c3-4524-88ff-2ab56e3eeb7a" />
+</div>
+
+<div align="center">
 <img width="412" height="279" alt="image" src="https://github.com/user-attachments/assets/d9c185ab-3d4b-4be0-9f0d-8478c174d7c2" />
 <img width="407" height="309" alt="image" src="https://github.com/user-attachments/assets/fbc594ba-4842-400e-8e4b-0d4db00b4074" />
 </div>
