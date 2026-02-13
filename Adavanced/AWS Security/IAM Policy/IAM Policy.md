@@ -5,7 +5,9 @@
 2. JSON 형식으로 정의
 3. 그룹 역할 , 유저, AWS 리소스에 부여되어 각 주체가 행동 가능한 권한 정의
 4. 정책의 구성
-<img width="582" height="316" alt="image" src="https://github.com/user-attachments/assets/44002f56-8b52-4e0d-923b-67b05d9e3271" />
+<div align="center">
+<img src="https://github.com/user-attachments/assets/44002f56-8b52-4e0d-923b-67b05d9e3271" />
+</div>
 
    - Resources : 어떤 AWS 리소스에 대해서
    - Action : 어떤 행동을
