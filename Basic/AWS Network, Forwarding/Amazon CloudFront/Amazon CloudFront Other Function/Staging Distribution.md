@@ -3,7 +3,7 @@
 -----
 1. CloudFront의 업데이트 전 Staging Distribution을 만들어 테스트 / 카나리 적용 가능
 2. 워크 플로우
-   - 원본 Distribution에서 파생된 Staging Distribution 새엉
+   - 원본 Distribution에서 파생된 Staging Distribution 생성
    - Staging Distribution으로 Header / Weight 기반으로 트래픽 라우팅
    - 검수가 완료되면 Staging Distribution을 원본으로 승격
 
