@@ -41,7 +41,7 @@
 -----
 ### AWS Certificate Manager
 -----
-1. AWS 서비스 및 연결된 내부 로스에 사용할 공인 및 사설 SSL / TLS(Secure Sockets Layer / 전송 계층 보안) 인증서를 손 쉽게 프로비저닝, 관리 및 배포할 수 있도록 지원하는 서비스
+1. AWS 서비스 및 연결된 내부 리소스에 사용할 공인 및 사설 SSL / TLS(Secure Sockets Layer / 전송 계층 보안) 인증서를 손 쉽게 프로비저닝, 관리 및 배포할 수 있도록 지원하는 서비스
 2. AWS에서 SSL / HTTPS에 사용하는 인증서를 관리하는 서비스 : 인증서를 발급받거나 Import 가능
 3. ALB, CloudFront, API Gateway와 연동하여 쉽게 HTTPS 프로토콜 구현 가능
 4. 두 가지 종류
