@@ -20,7 +20,7 @@
 <img src="https://github.com/user-attachments/assets/856fd865-e482-42d1-af20-5f283a5d188c" />
 </div>
 
-   - VPC에 Internet Gatweay 필요 (인터넷 통신용이 아니므로 대상으로 Route Table 연동 필요 업음)
+   - VPC에 Internet Gatweay 필요 (인터넷 통신용이 아니므로 대상으로 Route Table 연동 필요 없음)
    - Private Subnet에 적어도 하나의 IPv4 주소 가용 필요 (ENI 확보용)
    - 웹 소켓, gRPC, Origin Rewrite with Lambda@Edge, Response Timeout, Keep Alive Timout 불가능
 
