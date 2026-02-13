@@ -23,6 +23,7 @@
      + 해당 리소스에 누가, 무엇을 할 수 있는지 정의 (예) SQS 대기열에 Lambda Service가 접근 가능)
        
    - 권한 범위 제한 정책 : 실제로 권한을 주지는 않지만 최대 권한 범위를 제한하는 정책
+     + Access Control List
      + 세션 정책(Session Policy) (유저 / 역할이 할 수 있는 역할 제한)
        * 임시자격증명을 생성할 때, 같이 넣어주는 정책
        * 임시자격증명을 권한을 제한하기 위해 활용
@@ -42,9 +43,8 @@
 <img width="724" height="375" alt="image" src="https://github.com/user-attachments/assets/14cfacc0-0e79-44e3-af6a-265a0178cdf0" />
 
      + 권한 범위 (Permissions Boundaries) : AWS의 사용자나 역할의 권한을 제한하기 위한 정책
+<div align="center">
 <img width="263" height="243" alt="image" src="https://github.com/user-attachments/assets/4edbe74f-d5c3-4524-88ff-2ab56e3eeb7a" />
 <img width="412" height="279" alt="image" src="https://github.com/user-attachments/assets/d9c185ab-3d4b-4be0-9f0d-8478c174d7c2" />
 <img width="407" height="309" alt="image" src="https://github.com/user-attachments/assets/fbc594ba-4842-400e-8e4b-0d4db00b4074" />
-
-     + Access Control List
-
+</div>
