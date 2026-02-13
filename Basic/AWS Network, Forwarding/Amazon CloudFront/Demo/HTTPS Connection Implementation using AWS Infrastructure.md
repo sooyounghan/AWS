@@ -65,8 +65,75 @@
 <img src="https://github.com/user-attachments/assets/6c45ac9c-a0d3-4c20-9510-6383366c9c43" />
 </div>
 
+4. 주의사항 
+   - 인프라에서 Target / Origin까지 HTTP로 연결 : ALB는 Private 통신이 가능하기에 크게 문제는 없으나 CloudFront의 경우 Public 인터넷 통과
+   - 실제 Origin / Target 입장에서는 HTTP로 받기 때문에 HTTPS로 리다이렉션 등의 설정이 있는 경우, 무한 리다이렉트 발생 등의 문제 발생
+
 -----
-### 주의사항
+### Demo
 -----
-1. 인프라에서 Target / Origin까지 HTTP로 연결 : ALB는 Private 통신이 가능하기에 크게 문제는 없으나 CloudFront의 경우 Public 인터넷 통과
-2. 실제 Origin / Target 입장에서는 HTTP로 받기 때문에 HTTPS로 리다이렉션 등의 설정이 있는 경우, 무한 리다이렉트 발생 등의 문제 발생
+1. Application Load Balancer를 활용한 HTTPS 제공
+   - Route 53 도메인 보유 필수
+   - S3 버킷 프로비전 : demo-https-origin-{계정ID} - index.html 업로드
+   - EC2 인스턴스 프로비전 : demo-my-webserver / 키 페어 없이 계속 사용 / 보안그룹 : default / 사용자 데이터
+```
+#!/bin/bash
+sudo -s
+dnf install httpd -y
+service httpd start
+chkconfig httpd on
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+echo "$INSTANCE_ID" >> /var/www/html/index.html
+```
+
+   - ACM (CloudFront 인증서는 US-EAST-1만 가능하므로 변경) 
+     + 요청 - 인증서 유형 : 퍼블릭 인증서
+     + 정규화된 도메인 이름에 도메인(web.) 부여 (```*.```도메인도 같이 실시)
+     + 검증 방법 : DNS 검증 - 요청
+     + 검증 완료되면 Route 53에서 레코드 생성 - 레코드 생성 : Route 53 레코드 생성 확인
+
+   - CloudFront - 배포 생성
+     + demo-https
+     + 커스텀 도메인 : 도메인 입력 - Check Domain (Route 53 자동 연결)
+     + Origin Type : S3 (demo-https-origin-{계정ID}
+     + 보안 보호 비활성화
+     + TLS 인증서 : 해당되는 인증서 선택 (발급되었다면 존재)
+
+   - Route 53 레코드 생성
+     + 레코드 이름 : web
+     + 레코드 유형 : A
+     + 별칭 활성화
+     + 트래픽 라우팅 대상 : CloudFront 배포에 대한 별칭 - 해당 배포 선택
+
+   - HTTP에서 HTTPS 변경
+     + CloudFront - 배포 - 동작 - 편집 - 뷰어 프로토콜 정책 : Redirect HTTP to HTTPS
+     + /index.html 없이 접속 : 오류 페이지 - 403: 금지됨 (상태 코드) - 경로 : index.html - 응답 코드 : 200
+
+2. Application Load Balancer를 활용한 HTTPS 제공
+   - ACM (Application Load Balancer 인증서는 서울 리전에서 가능하므로 서울 리전으로 변경) 
+     + 요청 - 인증서 유형 : 퍼블릭 인증서
+     + 정규화된 도메인 이름에 도메인(web2.) 부여 (```*.```도메인도 같이 실시)
+     + 검증 방법 : DNS 검증 - 요청
+     + 검증 완료되면 Route 53에서 레코드 생성 - 레코드 생성 : Route 53 레코드 생성 확인
+
+   - EC2 - 대상 그룹 - 대상 그룹 생성
+     + EC2 인스턴스 사용
+     + 대상 그룹 : demo-https
+     + 상태 검사 경로 : ./index.html
+     + 사용 가능한 인스턴스는 위에 생성한 EC2 인스턴스 추가
+
+   - ALB
+     + 이름 : demo-https-alb
+     + 모든 가용 영역 선택
+     + 리스너 및 라우팅 : 프로토콜은 HTTPS / 기본 작업 : demo-https
+     + 인증서 소스 : ACM에서 선택 후, 위 생성한 ACM 선택
+
+   - Route 53 레코드 생성
+     + 레코드 이름 : web2
+     + 레코드 유형 : A
+     + 별칭 활성화
+     + 트래픽 라우팅 대상 : Application Load Balancer 배포에 대한 별칭 - 해당 배포 선택
+     + web2.도메인으로 접속 (HTTPS도 지원)
+
+3. 리소스 정리 : ALB 정리 / EC2 정리 
