@@ -137,3 +137,7 @@ echo "$INSTANCE_ID" >> /var/www/html/index.html
      + web2.도메인으로 접속 (HTTPS도 지원)
 
 3. 리소스 정리 : ALB 정리 / EC2 정리 
+
+4. S3 Static Hosting 활용
+   - 파일 업로드 - 정적 호스팅 파일들 업로드 (S3)
+   - CloudFront - 배포 - 무효화 - 캐싱 삭제 후 확인
