@@ -26,4 +26,17 @@
 
 3. Demo - VPC Origin
    - CloudFormation으로 VPC + Internal ALB + Private EC2 프로비전
+     + CloudFormation - 스택 생성 - 템플릿 파일 업로드 - 스택 이름 : demo-cf-vpc-origin - IAM 리소스 승인
+     + 리소스 프로비전 완료
+
    - CloudFront VPC Origin으로 해당 컨텐츠 제공
+     + EC2 인스턴스 확인 : 내부 EC2, LB이므로 확인 불가하므로 CloudShell 확인
+     + ```+```으로 Create VPC Enviornment - my-vpc-shell / VPC : demo-cf-vpc-origin / Private Subet 1  / 보안 그룹은 생성된 보안 그룹 선택 - Create
+     + curl 로드밸런서DNS이름 : 인스턴스 ID 출력
+     + CloudFront - VPC 오리진 - 생성
+       * demo-vpc-origin
+       * 오리진 ARN : Elastic Load Balancer 선택
+       * 프로토콜 : HTTP만 해당
+       * 배포 - 배포 생성 - demo-my-vpc-origin - VPC 오리진 - demo-vpc-origin 선택 - 도메인 네임 복사 후 접속하면 EC2 ID 정상 출력
+
+   - 리소스 정리 : CloudFront 배포 비활성화 / CloudFormation Template 삭제 / CloudFront 배포 삭제 / VPC 오리진 삭제
