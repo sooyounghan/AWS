@@ -114,7 +114,6 @@
 -----
 <div align="center">
 <img src="https://github.com/user-attachments/assets/aed991fd-6c4f-4cc3-a342-9190388a962b" />
-<img src="https://github.com/user-attachments/assets/250d5e91-85e6-4325-839b-a3547ccb5bc5" />
 </div>
 
 1. EC2 - 보안 그룹
