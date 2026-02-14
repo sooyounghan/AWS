@@ -10,7 +10,7 @@
 
 3. ENI (Elastic Network Interface)
    - EC2의 가상의 LAN 카드
-     + IP 주소와 MAC 주소 보유
+     + IP Address와 MAC Address 보유
      + ENI 하나 당 Private IP + 하나의 Public IP (Optional)
      + 필요에 따라서 한 개 이상 Private IP 부여 가능
 
@@ -116,3 +116,34 @@
 <img src="https://github.com/user-attachments/assets/aed991fd-6c4f-4cc3-a342-9190388a962b" />
 <img src="https://github.com/user-attachments/assets/250d5e91-85e6-4325-839b-a3547ccb5bc5" />
 </div>
+
+1. EC2 - 보안 그룹
+   + Demo-MY-WEB - 인바운드 규칙 - 유형 : HTTP / 소스 : 0.0.0.0/0 - 태그 : Name / Demo-MY-WEB
+   + Demo-MY-SSH - 인바운드 규칙 - 유형 : SSH / 소스 : 0.0.0.0/0 - 태그 : Name / Demo-MY-SSH
+   + EC2 인스턴스 생성 : Demo-MY-ENI-TEST / 키 페어 생성 / 기존 보안 그룹 선택 : Demo-MY-SSH / 사용자 데이터
+```
+#!/bin/bash
+sudo -s
+dnf install httpd -y
+service httpd start
+chkconfig httpd on
+TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+echo "$INSTANCE_ID" >> /var/www/html/index.html
+```
+
+2. EC2 가용 영역 확인
+3. 탄력적 IP 생성 : 탄력적 주소 할당
+4. 네트워크 인터페이스 - 네트워크 인터페이스 생성 - Demo-WEB-WEB - 서브넷 : 가용 영역 서브넷 설정
+   - 인터페이스 유형 : ENA
+   - 보안 그룹 : Demo-WEB-ENI
+   - 태그 : Name, Demo-WEB-ENI
+   - Demo-MY-SSH 네트워크 인터페이스 Name 태그 이름 Demo-SSH-ENI 변경
+
+5. 탄력적 IP - 작업 - 탄력적 IP 주소 연결 - 네트워크 인터페이스 - Demo-WEB-ENI
+6. 네트워크 인터페이스 - Demo-WEB-ENI 선택 - 작업 - 연결 - VPC 선택, 생성된 EC2 선택
+7. 웹 서버 동작 확인 : Demo-WEB-ENI Public IPv4 주소로 접속 확인
+   - SSH 접속 : Demo-SSH-ENI Public IPv4 주소로 접속 확인 (MobaXTerm)
+   - Session - SSH - Demo-SSH-ENI Public IPv4, ec2-user, 키 페어 연결
+
+8. 리소스 정리 : EC2 정리 / 탄력적 IP 연결 해제 / 네트워크 인터페이스 삭제 (분리 후 삭제)
