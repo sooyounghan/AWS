@@ -14,3 +14,6 @@
 <img src="https://github.com/user-attachments/assets/dde4d526-d66e-4da0-89cb-aa4bb684878d" />
 <img src="https://github.com/user-attachments/assets/05791452-4d4e-474c-824e-8b7e55db86f2" />
 </div>
+
+4. Demo
+   - Trusted Advisor - 비용 최적화 / 성능 / 내결함성 (보이지 않으면, 기본 티어면 비활성화)
