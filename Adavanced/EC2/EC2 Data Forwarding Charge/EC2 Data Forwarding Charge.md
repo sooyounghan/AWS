@@ -15,7 +15,7 @@
    - Internet Gateway를 통해 VPC에서 AWS Public Service (Amazon DynamoDB / S3 / CloudWatch)에 데이터 전송 시 비용 : $0.02?/GB
    - 단, EC2 Instance에서 NAT Gateway를 통해 Internet Gateway에 접근 : $0.045 / Hour + $0.045 / GB
 
-7. AWS 워크로드 간 데아터 요금
+7. AWS 워크로드 간 데이터 요금
    - Amazon RDS (Primary → Secondary (서로 다른 가용 영역)) : Cross-AZ BackUp 비용은 무료 (서비스에서 자체 지원)
    - 이 외에는 비용 발생 (EC2 → 다른 가용 영역의 RDS, EC2 → 다른 가용 영역의 EC2 등의 Cross-AZ : $0.01 in/out)
    - 같은 가용 영역 간에는 무료
@@ -64,5 +64,5 @@
 4. NLB Data 요금 정리
    - 💡 AZ간 통신 비용 : $0.01 / GB
    - ALB와 달리 AZ 간 통신 비용 발생
-   - 그 외에 ALB Data 요금 발새과 모두 동일
+   - 그 외에 ALB Data 요금 발생과 모두 동일
    
