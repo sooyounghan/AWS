@@ -133,7 +133,7 @@ echo "$INSTANCE_ID" >> /var/www/html/index.html
 
 2. EC2 가용 영역 확인
 3. 탄력적 IP 생성 : 탄력적 주소 할당
-4. 네트워크 인터페이스 - 네트워크 인터페이스 생성 - Demo-WEB-WEB - 서브넷 : 가용 영역 서브넷 설정
+4. 네트워크 인터페이스 - 네트워크 인터페이스 생성 - Demo-WEB-ENI - 서브넷 : 가용 영역 서브넷 설정
    - 인터페이스 유형 : ENA
    - 보안 그룹 : Demo-WEB-ENI
    - 태그 : Name, Demo-WEB-ENI
