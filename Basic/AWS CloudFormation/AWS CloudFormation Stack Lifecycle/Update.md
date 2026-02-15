@@ -189,3 +189,17 @@ Resources:
             VolumeSize: 10
             VolumeType: standard
 ```
+
+  - 업데이트 중 리소스 삭제 방지
+```json
+{
+  "Statement": [  
+    {
+      "Effect" : "Allow",
+      "NotAction" : "Update:Delete", # 업데이트 중 리소스 삭제 방지
+      "Principal": "*",
+      "Resource" : "*"
+    } 
+  ]
+}
+```
