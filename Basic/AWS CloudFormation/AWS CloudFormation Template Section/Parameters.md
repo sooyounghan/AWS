@@ -6,6 +6,8 @@
    - 일반 파라미터 : 템플릿 프로비전 시 사용자에게 받는 값으로 Parameter Section에서 정의
      + 예) EC2 Instance 타입, AMI ID / CloudFront DNS 값 / RDS DB 기본 패스워드 등
      + 활용 예시 : 하나의 정형화 된 아키텍쳐를 찍어낼 때 DNS만 교체 혹은 인스턴스 타입만 교체
+
+    - CloudFormation - 스택 생성 - Demo-EC2-Perm / 템플릿 파일 업로드 (instance_with_parameter.yml) : 프로비전
 ```yml
 Parameters:
   LatestLinuxAmiId:
@@ -19,9 +21,9 @@ Parameters:
     Type: "String"
     Default: "t3.micro"
     AllowedValues: ["t3.micro", "t3.small", "t3.medium", "t2.micro","m5.large"]
-Resources:
+Resources: # 보안 그룹 먼저 프로비전
   MyInstance:
-    Type: AWS::EC2::Instance
+    Type: AWS::EC2::Instance # EC2 인스턴스 생성
     Properties:
       Tags:
         - Key: "Name"
@@ -29,7 +31,7 @@ Resources:
       ImageId: !Ref LatestLinuxAmiId
       InstanceType: !Ref InstanceType
       SecurityGroups:
-        - !Ref SSHSecurityGroup
+        - !Ref SSHSecurityGroup # 보안 그룹 첫 번째 발생
       BlockDeviceMappings:
         - DeviceName: /dev/xvda
           Ebs:
@@ -51,7 +53,7 @@ Resources:
       Tags:
         - Key: Name
           Value: DemoEC2InstanceSecurityGroup
-  MyEIP:
+  MyEIP: # EIP 생성 (세번째)
     Type: AWS::EC2::EIP
     Properties:
       InstanceId: !Ref MyInstance
