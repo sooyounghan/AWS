@@ -10,6 +10,7 @@
 <img src="https://github.com/user-attachments/assets/8c79b516-25f4-43ee-8c9c-c44a020180b8" />
 </div>
 
+   - CloudFormation - 템플릿 파일 업로드 : instance_with_map.yml - demo-ec2-map
 ```yml
 Mappings:
   RegionMap:
