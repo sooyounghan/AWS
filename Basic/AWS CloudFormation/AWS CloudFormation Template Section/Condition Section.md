@@ -9,6 +9,10 @@
 <img src="https://github.com/user-attachments/assets/5ec316e1-f833-4c89-822d-7d0839b0fb1b" />
 </div>
 
+   - CloudFormation - 템플릿 파일 업로드 : instance_with_condition.yml
+     + demo-my-prod / 파라미터 : prod / MyInstanceProd
+     + demo-my-dev / 파라미터 : dev / MyInstanceDev
+     + EC2 인스턴스 확인 : Prod (t3.large) / Dev (t2.micro)
 ```yml
 Parameters:
   LatestLinuxAmiId:
