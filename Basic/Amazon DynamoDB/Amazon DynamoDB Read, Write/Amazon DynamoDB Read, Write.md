@@ -9,7 +9,7 @@
 2. 최종 일관성 (Eventual Consistency) : 읽은 시점 직전의 작업의 결과가 반영되지 않을 수 있는 일관성
 <div align="center">
 <img src="https://github.com/user-attachments/assets/76156f91-6456-4ae2-bd37-d1a57577ca84" />
-<img src="https://github.com/user-attachments/assets/cb49a228-be3b-49ce-98e8-c33a98be1340" />
+<img src="https://github.com/user-attachments/assets/1f9f3b37-2258-4114-b84d-b6b94c611245" />
 <img src="https://github.com/user-attachments/assets/ab3a343b-82fb-45a9-9d2b-75642e886006" />
 <img src="https://github.com/user-attachments/assets/3d57696b-5275-4237-ba05-7a0156193b2f" />
 </div>
