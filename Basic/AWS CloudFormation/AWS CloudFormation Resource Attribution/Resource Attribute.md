@@ -13,6 +13,44 @@
 <img src="https://github.com/user-attachments/assets/9ddb8ba6-4573-4369-9624-22bece4fa17a" />
 </div>
 
+```yml
+# AP-Northeast-2 리전만 사용 가능
+Resources:
+  MyS3BucketDelete:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "mybucket-${AWS::AccountId}-${AWS::StackName}-delete"
+  MyS3BucketRetain:
+    DeletionPolicy: Retain
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "mybucket-${AWS::AccountId}-${AWS::StackName}-retain"
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: "MyInstance"
+      InstanceType: "t2.micro"
+      ImageId: ami-0023481579962abd4
+  MyVolume:
+    Type: AWS::EC2::Volume
+    DeletionPolicy: Snapshot
+    Properties:
+      Size: 8
+      AvailabilityZone: !GetAtt MyInstance.AvailabilityZone
+      VolumeType: gp2
+      Tags:
+        - Key: Name
+          Value: MyVolume
+  VolumeAttachment:
+    Type: AWS::EC2::VolumeAttachment
+    Properties:
+      InstanceId: !Ref MyInstance
+      VolumeId: !Ref MyVolume
+      Device: /dev/sdf
+```
+
 4. DependsOn : 특정 리소스가 생성된 이후 해당 리소스 생성을 시작하도록 설정 (예) 반드시 RDS가 생성된 이후 EC2를 생성을 시작해서 서버가 설정되도록 구성)
    - 💡 참고 : !Ref, !GetAtt, !Sub로 묶인 경우 : 암시적으로 참조하는 리소스를 생성 후 해당 리소스 생성
    - 즉, 해당 참조가 없는 상태에서 리소스 생성 순서를 제어하기 위해 사용
@@ -20,6 +58,107 @@
 <img src="https://github.com/user-attachments/assets/6c2e9578-8e8a-4541-b110-de80c9fc9e92" />
 <img src="https://github.com/user-attachments/assets/864aa0e0-a86d-4b01-a07c-59a766502696" />
 </div>
+
+```yml
+Mappings:
+  RegionMap:
+    us-east-1:
+      AMI: ami-0182f373e66f89c85
+    us-west-1:
+      AMI: ami-025258b26b492aec6
+    ap-northeast-2:
+      AMI: ami-0023481579962abd4
+
+Parameters:
+  # LatestLinuxAmiId:
+  #   Type: "String"
+  #   Default: ami-0023481579962abd4
+  InstanceName:
+    Type: "String"
+    Default: "MyInstance"
+  InstanceType:
+    Description: "EC2 instance type."
+    Type: "String"
+    Default: "t3.micro"
+    AllowedValues: ["t3.micro", "t3.small", "t3.medium", "t2.micro"]
+Resources:
+  InstanceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      Path: /
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+
+  InstanceProfile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Path: /
+      Roles:
+        - !Ref InstanceRole
+  MyInstance:
+    Type: AWS::EC2::Instance
+    DependsOn: MyS3Bucket
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: !Ref InstanceName
+      ImageId: !FindInMap [RegionMap, !Ref "AWS::Region", AMI]
+      InstanceType: !Ref InstanceType
+      IamInstanceProfile: !Ref InstanceProfile
+      SecurityGroups:
+        - !Ref SSHSecurityGroup
+      AvailabilityZone:
+        Fn::Select: ["0", Fn::GetAZs: !Ref "AWS::Region"] # or !Select [0, !GetAZs ""]
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 10
+            VolumeType: standard
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          dnf install httpd -y
+          service httpd start
+          chkconfig httpd on
+          # Get the list of S3 buckets and write to index.html
+          BUCKETS=$(aws s3 ls)
+          echo "List of S3 Buckets:$BUCKETS" > /var/www/html/index.html
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "mybucket-${AWS::AccountId}-${AWS::StackName}"
+  SSHSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+      Tags:
+        - Key: Name
+          Value: DemoEC2InstanceSecurityGroup
+Outputs:
+  InstanceId:
+    Description: "The Instance ID of the EC2 instance"
+    Value: !Ref MyInstance
+    Export:
+      Name: !Sub "${AWS::StackName}-InstanceId"
+```
 
 5. Metadata : 리소스의 추가적 정보 제공
 6. UpdatePolicy : 리소스 업데이트 시 동작 방식 정의 (예) Autoscale의 경우 업데이트 시 인스턴스 업데이트 방식 정의(Replace, Rolling, Schedule))
