@@ -8,7 +8,7 @@
 <img src="https://github.com/user-attachments/assets/635324cf-9c27-4fea-adea-2abd2a8e0c01" />
 </div>
 
-4. Waht : AWS의 리소스를 관리하고 AWS와 On-Premise의 운영작업을 자동화하며 관리를 위한 인사이트를 제공하는 서비스
+4. What : AWS의 리소스를 관리하고 AWS와 On-Premise의 운영작업을 자동화하며 관리를 위한 인사이트를 제공하는 서비스
 5. When
    - AWS 리소스를 쉽게 관리하고 파악하고 싶을 때
    - AWS 및 On-Premise 리소스에 쉽게 접근하고 싶을 때
@@ -16,9 +16,9 @@
    - 다양한 시스템 환경 구성 설정 및 파라미터를 관리하고 싶을 때
 
 6. How
-  - Agent 설치로 운용중인 AWS / On-Premise 서버의 상태 파악
-  - 다양한 자동화 서비스 및 조회 서비스로 제어 및 현황 파악
-  - 기타 관리 기능 제공
+   - Agent 설치로 운용중인 AWS / On-Premise 서버의 상태 파악
+   - 다양한 자동화 서비스 및 조회 서비스로 제어 및 현황 파악
+   - 기타 관리 기능 제공
 
 7. 주요 기능
    - Run Command : 등록된 여러 EC2 인스턴스 / On-Premise 인스턴스에 명령 실행 (예) OS 업데이트 / 전체 서버 Reboot 등)
