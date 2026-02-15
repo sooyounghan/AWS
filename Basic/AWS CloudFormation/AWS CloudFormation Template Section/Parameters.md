@@ -35,7 +35,7 @@
 <img src="https://github.com/user-attachments/assets/8e50e7fd-d75c-4750-ab12-d1b0cc132130" />
 </div>
 
-    - CloudFormation - 스택 생성 - Demo-EC2-Perm / 템플릿 파일 업로드 (instance_with_parameter.yml) : 프로비전
+   - CloudFormation - 스택 생성 - Demo-EC2-Perm / 템플릿 파일 업로드 (instance_with_parameter.yml) : 프로비전
 ```yml
 Parameters:
   LatestLinuxAmiId:
@@ -106,6 +106,7 @@ Resources: # 보안 그룹 먼저 프로비전
 <img src="https://github.com/user-attachments/assets/647e02a8-bd3a-4a8d-bb3d-84d7a8ebfaa1" />
 </div>
 
+   - CloudFormation - 스택 생성 - demo-my-stack-name / 템플릿 파일 업로드 (instance_with_pseudo_parameter) : 프로비전
 ```yml
 Parameters:
   LatestLinuxAmiId:
