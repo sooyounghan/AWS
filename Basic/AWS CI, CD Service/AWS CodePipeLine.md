@@ -58,3 +58,5 @@ node test.js
    - 소소 코드 변경 : Hello World, Hello AWS, Hello Lambda로 변경 (Commit Change - 이벤트 발생)
      + 빌드 재실행
    - 편집 : 트리거 / 소스 / 빌드 스테이지 편집 가능 (유연한 파이프라인 수행 가능)
+
+6. 리소스 정리 - CodePipeline 삭제 / IAM 역할 삭제
