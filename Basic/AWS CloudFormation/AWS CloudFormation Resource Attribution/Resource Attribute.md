@@ -7,12 +7,13 @@
    - Delete : 스택 삭제 시 같이 삭제 (몇 리소스를 제외하고 기본 옵션)
    - Retain : 스택 삭제 시 해당 리소스는 삭제하지 않고 보존
      + 💡 주의 : 리소스 생성에 실패하여 롤백할 때도 보존됨
-     + RetaionExceptOnCreate : 리소스 처음 생성 할 때를 제외하고 보존 (즉, 처음 생성 시 실패한다면 삭제)
+     + RetainExceptOnCreate : 리소스 처음 생성 할 때를 제외하고 보존 (즉, 처음 생성 시 실패한다면 삭제)
    - Snapshot (지원 시) : 스냅샷을 지원하는 리소스 (EC2, RDS 등)의 경우 삭제 시 스냅샷을 생성하고 삭제 (RDS, EBS, RedShift, ElasticCache 등)
 <div align="center">
 <img src="https://github.com/user-attachments/assets/9ddb8ba6-4573-4369-9624-22bece4fa17a" />
 </div>
 
+   - CloudFormation - 스택 생성 - 템플릿 파일 업로드 : cloudformation_deletion_policy - demo-deletion-plocy (S3 버킷 2개 / EC2 인스턴스 1개 생성 확인 후 삭제 : DELETE_SKIPPED (Retaion이므로 Skip / 스냅샷 생성))
 ```yml
 # AP-Northeast-2 리전만 사용 가능
 Resources:
