@@ -27,3 +27,171 @@
 <img src="https://github.com/user-attachments/assets/f4e0aadb-44b0-4269-a8ad-e0d15e2a0565" />
 <img src="https://github.com/user-attachments/assets/15c0a1c2-9f86-4920-a378-cf2fb16b3b0b" />
 </div>
+
+5. Demo
+   - CloudFormation - 스택 생성 - 템플릿 파일 업로드 : intanace_and_alb.yml / demo-instance-alb
+     + LatestLinuxAmiId : Systems Manager - 파라미터 스토어 - 공용 파라미터 - ami-amazon-linux-latest - 값 (서울 리전의 Amazon Linux의 최신 AMI 값)
+     + VpcId : 현재 VPC 목록 선택 가능
+     + SubnetIds : Subnet ID를 리스트 타입으로 선택 
+```yml
+AWSTemplateFormatVersion: "2010-09-09"
+Description: CloudFormation Template to Provision ALB, Target Group, and Two EC2 Instances
+
+Parameters:
+  LatestLinuxAmiId:
+    Type: "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>" # EC2 Image ID를 담은 파라미터 타입
+    Default: "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64"
+  InstanceType:
+    Description: "EC2 instance type."
+    Type: "String"
+    Default: "t3.micro"
+    AllowedValues: ["t3.micro", "t3.small", "t3.medium", "t2.micro"]
+
+  VpcId:
+    Type: "AWS::EC2::VPC::Id"
+    Description: "VPC ID where the resources will be created"
+
+  SubnetIds:
+    Type: "List<AWS::EC2::Subnet::Id>" # 리스트 타입 지정
+    Description: "List of Subnet IDs for the ALB and EC2 instances"
+
+Resources:
+  InstanceRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - ec2.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      Path: /
+      ManagedPolicyArns: ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore", "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM", "arn:aws:iam::aws:policy/AmazonS3FullAccess", "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"]
+      Policies:
+        - PolicyName: ssm-getparameter
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action: ["cloudformation:*", "codecommit:*", "codepipeline:*", "ssm:*", "secretsmanager:*", "execute-api:*", "lambda:*", "logs:*", "sqs:*", "config:*"]
+                Resource: "*"
+
+  InstanceProfile:
+    Type: "AWS::IAM::InstanceProfile"
+    Properties:
+      Path: /
+      Roles:
+        - !Ref InstanceRole
+
+  MyInstance:
+    Type: AWS::EC2::Instance
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT15M
+        Count: 1
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: "MyInstance"
+      InstanceType: !Ref InstanceType
+      SecurityGroups:
+        - !Ref SSHSecurityGroup
+      AvailabilityZone:
+        Fn::Select: ["0", Fn::GetAZs: !Ref "AWS::Region"]
+      ImageId: !Ref LatestLinuxAmiId
+      IamInstanceProfile: !Ref InstanceProfile
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 10
+            VolumeType: standard
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash -xe
+          # Get the latest CloudFormation package
+          yum update -y aws-cfn-bootstrap
+          # Start cfn-init
+          /opt/aws/bin/cfn-init -s ${AWS::StackId} -r MyInstance --region ${AWS::Region}
+    Metadata:
+      AWS::CloudFormation::Init:
+        config:
+          files:
+            /home/ec2-user/install_httpd.sh:
+              content: |
+                #!/bin/bash -xe            
+                dnf install httpd -y
+                service httpd start
+                TOKEN=$(curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")
+                INSTANCE_ID=$(curl -s -H "X-aws-ec2-metadata-token: $TOKEN" http://169.254.169.254/latest/meta-data/instance-id)
+                echo "$INSTANCE_ID" >> /var/www/html/index.html
+                `
+              mode: "000755"
+              owner: root
+              group: root
+          commands:
+            00-install-agent:
+              command: "./install_httpd.sh"
+              cwd: "/home/ec2-user/"
+            00-cfn-signal:
+              command: !Join ["", ["/opt/aws/bin/cfn-signal -e 0 --stack ", !Ref "AWS::StackId", " --resource MyInstance --region ", !Ref "AWS::Region"]]
+
+  SSHSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+      Tags:
+        - Key: Name
+          Value: DemoEC2InstanceSecurityGroup
+  TargetGroup:
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    Properties:
+      Name: "MyTargetGroup"
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VpcId # 타입 지정
+      TargetType: "instance"
+      HealthCheckEnabled: true
+      HealthCheckPath: "/"
+      HealthCheckPort: "80"
+      HealthCheckProtocol: HTTP
+      Targets:
+        - Id: !Ref MyInstance
+
+  LoadBalancer:
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    Properties:
+      Name: "MyApplicationLoadBalancer"
+      Subnets: !Ref SubnetIds
+      Scheme: internet-facing
+      LoadBalancerAttributes:
+        - Key: idle_timeout.timeout_seconds
+          Value: "60"
+      SecurityGroups: [] # Add Security Group here
+
+  Listener:
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref TargetGroup
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
+
+Outputs:
+  LoadBalancerDNSName:
+    Description: "DNS name of the ALB"
+    Value: !GetAtt LoadBalancer.DNSName
+```
