@@ -48,4 +48,4 @@
 <img src="https://github.com/user-attachments/assets/98340463-0691-428c-b4b2-121a8ce16e2b" />
 </div>
 
-   - Security Group에서 Out-Bound 443포트가 열려있을 것
+   - 💡 Security Group에서 Out-Bound 443포트가 열려있을 것
