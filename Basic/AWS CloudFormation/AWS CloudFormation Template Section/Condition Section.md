@@ -9,7 +9,7 @@
 <img src="https://github.com/user-attachments/assets/5ec316e1-f833-4c89-822d-7d0839b0fb1b" />
 </div>
 
-```json
+```yml
 Parameters:
   LatestLinuxAmiId:
     Type: "String"
