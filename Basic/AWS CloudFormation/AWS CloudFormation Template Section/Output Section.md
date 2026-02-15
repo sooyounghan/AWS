@@ -11,6 +11,7 @@
 <img src="https://github.com/user-attachments/assets/bc8401a9-9251-4c81-82eb-64652e8464e2" />
 </div>
 
+   - CloudFormation - 템플릿 파일 업로드 : instance_with_output.yml - demo-my-ec2
 ```yml
 Mappings:
   RegionMap:
