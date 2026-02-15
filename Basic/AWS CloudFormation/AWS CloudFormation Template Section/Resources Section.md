@@ -8,7 +8,7 @@
      + 스택 안에서만 통용 (일종의 반 번호)
 
    - 유형 : 리소스의 유형 (예) S3, EC2, Elastic IP 등)
-     + AWS::ProductIdentifier::ResourceType 형식 (예) AWS::EC2::Instance```
+     + AWS::ProductIdentifier::ResourceType 형식 (예) AWS::EC2::Instance)
 
    - 리소스 속성 (Resource Attribute) : 리소스 자체 공통적 속성 정의 (삭제, 업데이트 리소스 전후 관계 등 정의)
    - 속성 (Property) : 리소스 유형별로 자세한 속성 정의
