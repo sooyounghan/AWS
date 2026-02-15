@@ -3,14 +3,14 @@
 -----
 1. DynamoDB 테이블 생성 : demo-ddb-table
    - 파티션 키 : pk
-   - 정렬 키 : 나
+   - 정렬 키 : sk
    - 테이블 설정 - 설정 사용자 지정
-     + 테이블 클래스 선택 : Standard / Standard-IA
+     + 테이블 클래스 선택 : Standard / Standard-IA (Standard 선택)
      + 용량 모드 : On-Demand / Provisioned (On-Demand 선택)
      + 읽기 / 쓰기 용량 - AutoScaling 지정 가능
      + 월 처리량 지정 가능
      + 💡 보조 인덱스 : 로컬 인덱스 (테이블 생성 즉시 가능) / 글로벌 인덱스 생성 가능
-       * 로컬 인덱스 : 정렬 키 (sk2) / 인덱스 이름(sk2-index) / 속성 프로젝션 : All
+     + 로컬 인덱스 : 정렬 키 (sk2) / 인덱스 이름(sk2-index) / 속성 프로젝션 : All
      + 예상 읽기 / 쓰기 비용
 
 2. 항목 탐색 - 항목 생성
