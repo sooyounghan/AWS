@@ -1,7 +1,7 @@
 -----
 ### Amazon DynamoDB 읽기 / 쓰기
 -----
-1. 강력한 일관성 (Strong Consistency) : 읽기 시점 이전의 모든 작업 결과 반영을 보장하는 일관성
+1. 강력한 일관성 (Strong Consistency) : 읽기 시점 이전의 모든 작업 결과 반영을 보장하는 일관성 (💡 항상 리더 노드를 거침)
 <div align="center">
 <img src="https://github.com/user-attachments/assets/6d918b48-dc75-4d3d-af7e-2ff2dba13de7" />
 </div>
