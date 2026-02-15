@@ -1,11 +1,11 @@
 -----
 ### AWS CodeDeploy
 -----
-1. AWS의 리소스 / On-Premise 리소스에 배포를 담당하는 서비스 : EC2 / ECS / Lambda + On-Premise 등의 리소스에 배포
+1. AWS의 리소스 / On-Premise 리소스에 배포를 담당하는 서비스 : EC2 / ECS / Lambda 또는 On-Premise 등의 리소스에 배포
 2. 거의 대부분의 컨텐츠 배포 지원 : 코드 / Lambda / Web / 패키지 / 미디어파일 등
 3. 배포를 위한 소스로 S3, GitHub, Bitbucket 등 활용
 4. AWS의 Autoscale / ELB와 연동 지원 (예) Autoscale에서 EC2 신규 프로비전 CodeDeploy로 배포 완료 후 내보내기)
-5. CodeDeploy Agent 활용 (조건 : Outbound 443 Open / CodeDeploy 서비스 접근 가능)
+5. 💡 CodeDeploy Agent 활용 (조건 : Outbound 443 Open / CodeDeploy 서비스 접근 가능)
 6. 롤백 지원 : 배포에 실패하거나 CloudWatch 경보가 발생하는 경우
 7. 배포 방식 (In-Place / Rolling)
    - 💡 기존에 배포된 리소스를 활용하는 배포 방식
