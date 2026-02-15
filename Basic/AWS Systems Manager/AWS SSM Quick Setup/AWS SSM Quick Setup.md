@@ -26,13 +26,37 @@
 <img src="https://github.com/user-attachments/assets/32969197-1345-433b-8f34-a8cfd9f992ac" />
 </div>
 
-5. SSM의 이해를 바탕으로 설정 과정을 간소화하고 싶은 유저에게 적합 : 서비스를 처음 사용하거나 쉽게 사용하고 싶은 사용자 대상이 아님
+5. 💡 SSM의 이해를 바탕으로 설정 과정을 간소화하고 싶은 유저에게 적합 : 서비스를 처음 사용하거나 쉽게 사용하고 싶은 사용자 대상이 아님
 6. Demo - EC2 자동 실행 및 종료
    - AWS SSM Quick Setup을 활용해 비용 절감을 위한 EC2 자동 시작 / 중지
      + 특정 시각(예) 오전 8시)에 EC2 시작 후, 특정 시각(예) 오후 7시)에 중지
      + 사용하지 않는 시간 동안에는 EBS 비용만 발생
+<div align="center">
+<img src="https://github.com/user-attachments/assets/06f515e3-e84e-44c5-9a0c-6b5c407fe185" />
+</div>
+     
    - 과정
      + SSM 인스턴스 역할 생성
      + EC2 프로비전
      + SSM QuickSetup으로 설정 및 인스턴스 중지 / 시작 테스트
-     
+
+   - IAM 역할 생성 - 역할 - 역할 생성 (demo-ec2-role-for-ssm)
+
+   - EC2 인스턴스 생성 - demo-my-ec2-ssm / 키 페어 없이 진행 / 기존 보안 그룹 선택 : default
+     + IAM 인스턴스 프로파일 : demo-ec2-role-for-ssm
+     + 태그 : Service / dev
+
+   - Systems Manager - 빠른 설정 (Quick Setup) - Get Started
+     + Resource Schedular
+     + Key : Service
+     + Value : dev
+     + Schedule Time zone : Asia/Seoul
+     + Schdule Days : 요일 선택
+     + Start Instance Time, Stop Instance Time 설정
+     + 리전 선택
+     + 완료되면 대시보드 생성
+     + 시간 변경 : Edit - Stop Instance Time 변경 (Setup 이후 EC2 인스턴스 중지)
+     + Configuration Details - View Details : 현재 EC2 인스턴스의 설정 상황을 볼 수 있음
+  
+   - CloudFormation - QuickSetup 관련 리소스들과 스택 생성
+   - 리소스 정리 : EC2 종료 / Quick Setup 제거 / 스택 제거
