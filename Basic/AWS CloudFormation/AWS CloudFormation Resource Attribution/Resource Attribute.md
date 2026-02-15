@@ -13,7 +13,9 @@
 <img src="https://github.com/user-attachments/assets/9ddb8ba6-4573-4369-9624-22bece4fa17a" />
 </div>
 
-   - CloudFormation - 스택 생성 - 템플릿 파일 업로드 : cloudformation_deletion_policy - demo-deletion-plocy (S3 버킷 2개 / EC2 인스턴스 1개 생성 확인 후 삭제 : DELETE_SKIPPED (Retaion이므로 Skip / 스냅샷 생성))
+   - CloudFormation - 스택 생성 - 템플릿 파일 업로드 : cloudformation_deletion_policy - demo-deletion-plocy
+     + S3 버킷 2개 / EC2 인스턴스 1개 생성 확인 후 삭제
+     + DELETE_SKIPPED (Retaion이므로 Skip / 스냅샷 생성))
 ```yml
 # AP-Northeast-2 리전만 사용 가능
 Resources:
@@ -60,6 +62,8 @@ Resources:
 <img src="https://github.com/user-attachments/assets/864aa0e0-a86d-4b01-a07c-59a766502696" />
 </div>
 
+   - CloudFormation - 스택 생성 - 템플릿 파일 업로드 : cloudformation_depends_on - demo-depends-on
+     + S3 버킷 생성 후, EC2 인스턴스 생성 확인 가능
 ```yml
 Mappings:
   RegionMap:
@@ -107,7 +111,7 @@ Resources:
         - !Ref InstanceRole
   MyInstance:
     Type: AWS::EC2::Instance
-    DependsOn: MyS3Bucket
+    DependsOn: MyS3Bucket # MyS3Bucket 생성 후 EC2 인스턴스 생성
     Properties:
       Tags:
         - Key: "Name"
@@ -166,6 +170,7 @@ Outputs:
    - 예) ElasticCache의 샤드 업데이트 방식 정의
 
 7. UpdateReplacePolicy : 리소스의 업데이트 시 기존 리소스의 교체 방식 정의 (예) EC2 인스턴스, RDS 업데이트 시 업데이트 시 기존 EBS 볼륨의 스냅샷을 만들 것인지 여부 등을 정의)
+   
 <div align="center">
 <img =src="https://github.com/user-attachments/assets/149c65eb-3e5f-43b2-a611-91152c3be79f" />
 </div>
