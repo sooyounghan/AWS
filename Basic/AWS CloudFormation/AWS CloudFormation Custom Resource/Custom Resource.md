@@ -34,6 +34,17 @@
 <img src="https://github.com/user-attachments/assets/d94d1cf1-d2c1-46e0-9d93-45e3384a76bb" />
 </div>
 
+   - CloudFormation - 템플릿 파일 업로드 : s3bucket_without_custom_resource.yml - demo-s3
+     + 리소스 : S3 버킷 접근 가능
+     + S3에 파일 업로드 후, 스택 삭제하면 오류 발생 (버킷 비우기 필요)
+
+   - CloudFormation - 템플릿 파일 업로드 : s3bucket_with_custom_resource.yml - demo-s3-test
+     + 람다 서비스 위한 IAM 역할
+     + Node.js 람다 함수 존재
+     + 커스텀 리소스 부분 존재
+       * DELETE라면, 버킷 모든 내용 삭제
+       * 아니라면, Success
+
 6. 주의사항
    - 기본 커스텀 리소스의 Timeout은 한시간
      + 즉, 잘못 프로비전하면 한 시간 동안 스택 삭제 불가능
