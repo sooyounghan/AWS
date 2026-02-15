@@ -127,3 +127,4 @@ aws dynamodb update-item \
 ```
 
    - 항목 삭제 가능
+   - 테이블 삭제 후 리소스 정리
