@@ -18,3 +18,21 @@
 <img src="https://github.com/user-attachments/assets/6ae2ff0b-e196-43dd-a7ef-fc89fdae5eff" />
 <img src="https://github.com/user-attachments/assets/3e0753f9-094b-4ced-bc59-b0bf759b7ba3" />
 </div>
+
+```json
+#AP-Northeast-2 리전만 사용 가능
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: "MyInstance"
+      InstanceType: "t2.micro"
+      ImageId: ami-0023481579962abd4
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 10
+            VolumeType: standard
+```
