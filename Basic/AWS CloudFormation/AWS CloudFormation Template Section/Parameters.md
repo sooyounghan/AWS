@@ -6,10 +6,122 @@
    - 일반 파라미터 : 템플릿 프로비전 시 사용자에게 받는 값으로 Parameter Section에서 정의
      + 예) EC2 Instance 타입, AMI ID / CloudFront DNS 값 / RDS DB 기본 패스워드 등
      + 활용 예시 : 하나의 정형화 된 아키텍쳐를 찍어낼 때 DNS만 교체 혹은 인스턴스 타입만 교체
+```json
+Parameters:
+  LatestLinuxAmiId:
+    Type: "String"
+    Default: ami-0023481579962abd4
+  InstanceName:
+    Type: "String"
+    Default: "MyInstance"
+  InstanceType:
+    Description: "EC2 instance type."
+    Type: "String"
+    Default: "t3.micro"
+    AllowedValues: ["t3.micro", "t3.small", "t3.medium", "t2.micro","m5.large"]
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: !Ref InstanceName
+      ImageId: !Ref LatestLinuxAmiId
+      InstanceType: !Ref InstanceType
+      SecurityGroups:
+        - !Ref SSHSecurityGroup
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 10
+            VolumeType: standard
+  SSHSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+      Tags:
+        - Key: Name
+          Value: DemoEC2InstanceSecurityGroup
+  MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref MyInstance
+      Tags:
+        - Key: "Name"
+          Value: !Ref InstanceName
+```
 
    - Pesudo 파라미터 : CloudFormation에서 템플릿 프로비전 시 지정해주는 값으로 프로비전 당시의 상황을 반영하여 스택으로 자동으로 전달
      + 예) Region, Account ID, StackName
      + 활용 예시 : S3 버킷 이름 끝에 Account ID를 붙이고 싶은 경우
+```json
+Parameters:
+  LatestLinuxAmiId:
+    Type: "String"
+    Default: ami-0023481579962abd4
+  InstanceName:
+    Type: "String"
+    Default: "MyInstance"
+  InstanceType:
+    Description: "EC2 instance type."
+    Type: "String"
+    Default: "t3.micro"
+    AllowedValues: ["t3.micro", "t3.small", "t3.medium", "t2.micro"]
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      Tags:
+        - Key: "Name"
+          Value: !Ref InstanceName
+      ImageId: !Ref LatestLinuxAmiId
+      InstanceType: !Ref InstanceType
+      SecurityGroups:
+        - !Ref SSHSecurityGroup
+      AvailabilityZone:
+        Fn::Select: ["0", Fn::GetAZs: !Ref "AWS::Region"] # or !Select [0, !GetAZs ""]
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeSize: 10
+            VolumeType: standard
+  MyS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "mybucket-${AWS::AccountId}-${AWS::StackName}"
+  MyEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      InstanceId: !Ref MyInstance
+      Tags:
+        - Key: "Name"
+          Value: !Ref InstanceName
+  SSHSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access via port 22
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 22
+          IpProtocol: tcp
+          ToPort: 22
+        - CidrIp: 0.0.0.0/0
+          FromPort: 80
+          IpProtocol: tcp
+          ToPort: 80
+      Tags:
+        - Key: Name
+          Value: DemoEC2InstanceSecurityGroup
+```
 
 3. Parameters 섹션
    - 템플릿에서 일반 파라미터를 정의하는 섹션
