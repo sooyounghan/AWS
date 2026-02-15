@@ -29,15 +29,15 @@
      + 단순한 값 혹은 집합(Set) 구성 가능
      + 타입 지정 필요 (예) String, Integer)
 
-   - 항목(Item) : 여러 속성의 집합 (각 항목은 최대 40KB (모든 항목 명 / 항목 값 포함)
+   - 항목(Item) : 여러 속성의 집합 (각 항목은 최대 40KB (모든 항목 명 / 항목 값 포함))
    - 테이블 : 다양한 아이템의 집합
      + 하나의 테이블에는 반드시 하나의 파티션 키(Partition Key 또는 Hash Key)를 위한 속성 지정 필요
      + 선택적으로 정렬 키(Sort Key 또는 Range Key)를 위한 속성 지정
 
    - 키 : 각 테이블 별로 파티션 키 / 정렬 키 지정 가능 (파티션 키 단독 혹은 파티션 키 + 정렬 키 조합으로 Unique 키 구성)
 <div align="center">
-<img src="https://github.com/user-attachments/assets/0bad27dd-080f-4c91-9824-7f6129153af8" />
 <img src="https://github.com/user-attachments/assets/1bb0b900-3fec-4521-94cd-23b115518b52" />
+<img src="https://github.com/user-attachments/assets/0bad27dd-080f-4c91-9824-7f6129153af8" />
 <img src="https://github.com/user-attachments/assets/2a63aa16-5383-4612-9bbc-226184f066a3" />
 <img src="https://github.com/user-attachments/assets/6f58f066-6483-44d0-8a46-7ded5d2baa52" />
 <img src="https://github.com/user-attachments/assets/29e251a5-2e1b-4a8a-ae06-a5c682019de6" />
@@ -74,3 +74,56 @@
 <img src="https://github.com/user-attachments/assets/2cc4e450-16af-469e-b2d1-d03beceec441" />
 <img src="https://github.com/user-attachments/assets/4c421641-9e0b-402a-a81d-0f4fd81917ac" />
 </div>
+
+9. Demo
+   - DynamoDB - 대시보드 - 테이블 생성 - demo-test-table
+     + 파티션 키 : partition_key (문자열)
+     + 정렬 키 : sort_key (숫자)
+
+   - 항목 탐색 - 테이블 선택 - 항목 생성
+     + partition_key : test
+     + sort_key : 1
+     + 속성 추가 : 문자열 (region : ap-northeast-2)
+     + 속성 추가 : 숫자 (account_id : 계정ID)
+
+   - 새로운 항목 생성
+     + partition_key : test2
+     + sort_key : 2
+     + 속성 추가 : 문자열 (provider : aws)
+     + 속성 추가 : 숫자 (age : 15)
+     + JSON 뷰로 확인 가능
+
+   - 항목 생성
+     + partition_key : test1
+     + sort_key : 1
+     + 속성 추가 : 문자열 (country : kr)
+     + 속성 추가 : 문자열 (south : ture)
+     + 생성 불가 : partition_key, sort_key 존재 - test2로 변경하면 생성
+
+   - 항목 스캔 또는 쿼리 - 스캔 : 아이템 모두 확인 가능
+   - 항목 스캔 또는 쿼리 - 쿼리 : 특정 키 검색 (파티션 키만 입력해서 검색 가능 / 정렬 키만 입력 가능 / 둘 다 가능)
+   - 업데이트 (test, test2)
+     + 작업 - 항목 편집
+     + CloudShell에 명령어 입력
+       * 값이 변경 (Update / 기본 속성 없어짐) [putItem]
+       * 값이 변경 (기존 항목 그대로 유지) [updateItem]
+```
+aws dynamodb put-item \
+    --table-name demo-test-table \
+    --item '{
+        "partition_key": {"S": "test"},
+        "sort_key": {"N": "1"},
+        "value": {"S": "abcd1234"}
+    }'
+```
+```
+aws dynamodb update-item \
+    --table-name demo-test-table \
+    --key '{"partition_key": {"S": "test"}, "sort_key": {"N": "1"}}' \
+    --update-expression "SET #attrName = :attrValue, #testValue = :testVal" \
+    --expression-attribute-names '{"#attrName": "newvalue", "#testValue": "testvalue"}' \
+    --expression-attribute-values '{":attrValue": {"S": "abcd123456"}, ":testVal": {"S": "5432abcd"}}' \
+    --return-values ALL_NEW
+```
+
+   - 항목 삭제 가능
