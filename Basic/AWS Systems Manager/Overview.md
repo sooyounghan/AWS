@@ -33,9 +33,9 @@
    - Quick Setup : 다양한 Systems Manager의 기능을 엮어서 빠르게 사용할 수 있도록 준비한 서비스
 
 8. SSM Agent
-   - System Manager Agent : EC2 / On-Premise / VM에 설치해서 사용하는 Systems Manager 전용 Agent
-   - System Manager의 노드 업데이트 / 관리 / 설정을 지원
-   - System Manger와 통신할 수 있는 환경 필요
+   - Systems Manager Agent : EC2 / On-Premise / VM에 설치해서 사용하는 Systems Manager 전용 Agent
+   - Systems Manager의 노드 업데이트 / 관리 / 설정을 지원
+   - Systems Manger와 통신할 수 있는 환경 필요
      + ssmmessages / ec2messsages 서비스와 통신
      + 보안 그룹 / NACL / 방화벽 등의 허용
    - IAM 권한 필요 (예) AmazonSSMManagedInstanceCore)
