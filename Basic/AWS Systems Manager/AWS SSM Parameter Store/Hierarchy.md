@@ -6,7 +6,7 @@
 <img src="https://github.com/user-attachments/assets/d377292c-6c57-43df-b140-2f1c4a9c4b90" />
 </div>
 
-   - 첫 글자가 /로 시작하지 않을 경우 : 게층 구조 없는 파라미터로 생성 가능
+   - 첫 글자가 /로 시작하지 않을 경우 : 계층 구조 없는 파라미터로 생성 가능
 
 2. 활용
    - 계층 구조 단위로 조회 가능 (GetParametersByPath) (예) aws ssm get-parameters-by-path --path /myproject/prod/db)
